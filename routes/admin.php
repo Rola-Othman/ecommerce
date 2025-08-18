@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\ProudctController;
 use App\Http\Controllers\Backend\SliderController;
@@ -47,4 +48,7 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   Route::get('product/get-child-categories', [ProudctController::class, 'getChildCategories'])->name('product.get-child-categories');
   Route::put('product/change-status', [ProudctController::class, 'changeStatus'])->name('product.change-status');
   Route::resource('products', ProudctController::class);
+  /** product image gallery routes */
+  Route::resource('products-image-gallery', ProductImageGalleryController::class);
+  
 });

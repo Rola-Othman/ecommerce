@@ -26,6 +26,26 @@ trait FileUpload{
        
     }
 
+
+    /**
+     ** رفع ملفات متعددة.
+     *
+     * @param array //*$files الملفات التي تم رفعها.
+     * @param string //*$directory المجلد الي راح اخزن فيه مسار الملفات.
+     * @return array //*راح ترجع لي.
+     */
+    public function uploadFiles(array $files) : array {
+        $filePaths = [];
+        foreach ($files as $file) {
+            if ($file instanceof UploadedFile) {
+                $filePaths[] = $this->uploadFile($file);
+            }
+        }
+        return $filePaths;
+      }
+
+
+
     /**
      * حذف الملفات.
      *
