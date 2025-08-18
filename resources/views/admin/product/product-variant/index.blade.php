@@ -3,8 +3,9 @@
     <!-- Main Content -->
     <section class="section">
         <div class="section-header">
-            <h1>Product Image Gallery</h1>
+            <h1>Product Variant</h1>
         </div>
+
         <div class="mb-3">
             <a href="{{ route('admin.products.index') }}" class="btn btn-primary">Back</a>
         </div>
@@ -13,31 +14,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Product: {{ $product->name }}</h4>
-                        </div>
-                        <div class="card-body">
-                            <form method="POST"
-                                action="{{ route('admin.products-image-gallery.store', ['product' => $product->id]) }}"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="image">Image <code>Multiple image supported</code></label>
-                                    <input type="file" name="image[]" id="image" class="form-control" multiple>
-                                    <input type="hidden" value="{{ $product->id }}" name="product_id">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Upload</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>All images</h4>
-
+                             <h4>Product: {{$product->name}}</h4>
+                            <div class="card-header-action">
+                                <a href="{{ route('admin.products-variant.create', ['product' => $product->id]) }}" class="btn btn-primary"><i
+                                        class="fas fa-plus"></i>Create new</a>
+                            </div>
                         </div>
                         <div class="card-body">
                             {{ $dataTable->table() }}
@@ -57,7 +38,7 @@
                 let id = $(this).data('id');
 
                 $.ajax({
-                    url: "{{ route('admin.product.change-status') }}",
+                    url: "{{ route('admin.products-variant.change-status') }}",
                     method: 'PUT',
                     data: {
                         status: isChecked,

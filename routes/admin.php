@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
+use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\ProudctController;
 use App\Http\Controllers\Backend\SliderController;
@@ -50,5 +51,9 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   Route::resource('products', ProudctController::class);
   /** product image gallery routes */
   Route::resource('products-image-gallery', ProductImageGalleryController::class);
+    /** product variant routes */
+    Route::put('products-variant/change-status', [ProductVariantController::class, 'changeStatus'])->name('products-variant.change-status');
+
+  Route::resource('products-variant', ProductVariantController::class);
   
 });

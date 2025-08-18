@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductImageGallery;
 use App\Models\Proudct;
 use App\Traits\FileUpload;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductImageGalleryController extends Controller
 {
@@ -25,17 +27,12 @@ class ProductImageGalleryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     ** حفظ صور المنتج في معرض الصور
+     ** Save product images to the image gallery
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
     {
         $request->validate([
             'image.*' => ['required', 'image', 'max:2048']
@@ -55,33 +52,12 @@ class ProductImageGalleryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     ** حذف صورة من معرض صور المنتج
+     ** Delete an image from the product image gallery
+     * @param string $id
+     * @return Response
      */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(string $id):Response
     {
         
         $productImage = ProductImageGallery::findOrFail($id);
