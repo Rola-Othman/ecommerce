@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\ProductImageGallery;
+use App\Models\ProductVariant;
 use App\Models\Proudct;
 use App\Models\SubCategory;
 use App\Traits\FileUpload;
@@ -177,11 +179,35 @@ class ProudctController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * * حذف المنتج.
+     * * Delete the specified product.
+     * @param string $id
      */
     public function destroy(string $id)
-    {
-        //
+    {     
+        $product = Proudct::findOrFail($id);
+        
+        /** Delte the main product image */
+        $this->deleteFile($product->thumb_image);
+
+        /** Delete product gallery images */
+        $galleryImages = ProductImageGallery::where('product_id', $product->id)->get();
+        foreach($galleryImages as $image){
+            $this->deleteFile($image->image);
+            $image->delete();
+        }
+
+        /** Delete product variants if exist */
+        $variants = ProductVariant::where('product_id', $product->id)->get();
+
+        foreach($variants as $variant){
+            $variant->productVariantItems()->delete();
+            $variant->delete();
+        }
+
+        $product->delete();
+
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
     public function changeStatus(Request $request)
