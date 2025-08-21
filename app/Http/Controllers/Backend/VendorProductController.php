@@ -10,6 +10,7 @@ use App\Models\ChildCategory;
 use App\Models\Proudct;
 use App\Models\SubCategory;
 use App\Traits\FileUpload;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -100,19 +101,99 @@ class VendorProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     ** عرض صفحة تعديل المنتج
+     ** Show the edit product page
+     ** @param string $id
+     * @return View
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        //
+        $product = Proudct::findOrFail($id);
+
+        /** Check if it's the owner of the product */
+        if ($product->vendor_id != Auth::user()->vendor->id) {
+            abort(404);
+        }
+
+        $subCategories = SubCategory::where('category_id', $product->category_id)->get();
+        $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        return view(
+            'vendor.product.edit',
+            compact(
+                'product',
+                'subCategories',
+                'childCategories',
+                'categories',
+                'brands'
+            )
+        );
     }
 
     /**
-     * Update the specified resource in storage.
+     ** حفظ التعديلات على المنتج
+     ** Save the product modifications
+     * @param Request $request
+     * @param string $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        //
+        ds($request->all());
+        $request->validate([
+            'image' => ['nullable', 'image', 'max:3000'],
+            'name' => ['required', 'max:200'],
+            'category' => ['required'],
+            'brand' => ['required'],
+            'price' => ['required'],
+            'qty' => ['required'],
+            'short_description' => ['required', 'max: 600'],
+            'long_description' => ['required'],
+            'seo_title' => ['nullable', 'max:200'],
+            'seo_description' => ['nullable', 'max:250'],
+            'status' => ['required']
+        ]);
+
+        $product = Proudct::findOrFail($id);
+
+        if ($product->vendor_id != Auth::user()->vendor->id) {
+            abort(404);
+        }
+
+        if ($request->hasFile('image')) {
+            $imagePath = $this->uploadFile($request->file('image')); // تعديل الصورة | Update image
+            $this->deleteFile($product->image); // حذف الصورة القديمة | delete old image
+            $product->thumb_image = $imagePath;
+        }
+
+        $product->name = $request->name;
+        $product->slug = Str::slug($request->name);
+        $product->vendor_id = Auth::user()->vendor->id;
+        $product->category_id = $request->category;
+        $product->sub_category_id = $request->sub_category;
+        $product->child_category_id = $request->child_category;
+        $product->brand_id = $request->brand;
+        $product->qty = $request->qty;
+        $product->short_description = $request->short_description;
+        $product->long_description = $request->long_description;
+        $product->video_link = $request->video_link;
+        $product->sku = $request->sku;
+        $product->price = $request->price;
+        $product->offer_price = $request->offer_price;
+        $product->offer_start_date = $request->offer_start_date;
+        $product->offer_end_date = $request->offer_end_date;
+        $product->product_type = $request->product_type;
+        $product->status = $request->status;
+        $product->is_approved = $product->is_approved;
+        $product->seo_title = $request->seo_title;
+        $product->seo_description = $request->seo_description;
+        $product->save();
+
+        flash()->success('Updated successfully.');
+
+        return redirect()->route('vendor.products.index');
     }
 
     /**
