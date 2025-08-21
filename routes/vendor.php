@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Backend\VendorProductController;
+use App\Http\Controllers\Backend\VendorProductImageGalleryController;
 use App\Http\Controllers\Backend\VendorShopProfileController;
 use App\Http\Controllers\Frontend\VendorProfileController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,8 @@ Route::group(['middleware' => ['auth', 'role:vendor'], 'prefix' => 'vendor', 'as
   Route::get('product/get-child-categories', [VendorProductController::class, 'getChildCategories'])->name('product.get-child-categories');
   Route::put('product/change-status', [VendorProductController::class, 'changeStatus'])->name('product.change-status');
   Route::resource('products', VendorProductController::class);
+  /** Products image gallery route */
+  Route::resource('products-image-gallery', VendorProductImageGalleryController::class);
 });
 
 
