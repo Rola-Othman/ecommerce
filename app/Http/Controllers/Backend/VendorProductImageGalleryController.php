@@ -2,17 +2,35 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\VendorProductImageGalleryDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\ProductImageGallery;
+use App\Models\Proudct;
+use App\Traits\FileUpload;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class VendorProductImageGalleryController extends Controller
 {
+    use FileUpload;
     /**
-     * Display a listing of the resource.
+     ** عرض قائمة صور معرض المنتج.
+     ** Display a image gallery of the product.
+     * @param Request $request
+     * @param VendorProductImageGalleryDataTable $dataTable
      */
-    public function index()
+    public function index(Request $request, VendorProductImageGalleryDataTable $dataTable)
     {
-        //
+        $product = Proudct::findOrFail($request->product);
+
+        /** Check product vendor */
+        if ($product->vendor_id !== Auth::user()->vendor->id) {
+            abort(404);
+        }
+
+        return $dataTable->render('vendor.product.image-gallery.index', compact('product'));
     }
 
     /**
@@ -24,11 +42,30 @@ class VendorProductImageGalleryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     ** حفظ صورة جديدة في معرض صور المنتج.
+     ** save a new image in the product image gallery.
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $request->validate([
+            'image.*' => ['required', 'image', 'max:2048']
+        ]);
+
+        /** Handle image upload */
+        $imagePaths = $this->uploadFiles($request->file('image'));
+
+        foreach ($imagePaths as $path) {
+            $productImageGallery = new ProductImageGallery();
+            $productImageGallery->image = $path;
+            $productImageGallery->product_id = $request->product;
+            $productImageGallery->save();
+        }
+
+        flash()->success('Uploaded successfully.');
+
+        return redirect()->back();
     }
 
     /**
@@ -56,10 +93,24 @@ class VendorProductImageGalleryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     ** حذف صورة من معرض صور المنتج.
+     ** Delete an image from the product image gallery.
+     * @param string $id
+     * @return Response
      */
-    public function destroy(string $id)
+    public function destroy(string $id):Response
     {
-        //
+    //    ds('Deleting product image with ID: ' . $id);
+        $productImage = ProductImageGallery::findOrFail($id);
+
+        /** Check product vendor */
+        if ($productImage->product->vendor_id !== Auth::user()->vendor->id) {
+            abort(404);
+        }
+
+        $this->deleteFile($productImage->image);
+        $productImage->delete();
+
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 }

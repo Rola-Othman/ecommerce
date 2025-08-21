@@ -27,19 +27,18 @@ class VendorProudctDataTable extends DataTable
         ->addColumn('action', function($query){
             $editBtn = "<a href='".route('vendor.products.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
             $deleteBtn = "<a href='".route('vendor.products.destroy', $query->id)."' class='btn btn-danger delete-item' ><i class='far fa-trash-alt'></i></a>";
+//                   <li><a class="dropdown-item has-icon" href="'.route('vendor.products-variant.index', ['product' => $query->id]).'"> Variants</a></li>
 
-            // $moreBtn = '<div class="btn-group dropstart" style="margin-left:3px">
-            //     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            //     <i class="fas fa-cog"></i>
-            //     </button>
-            //     <ul class="dropdown-menu">
-            //         <li><a class="dropdown-item has-icon" href="'.route('vendor.products-image-gallery.index', ['product' => $query->id]).'"> Image Gallery</a></li>
-            //         <li><a class="dropdown-item has-icon" href="'.route('vendor.products-variant.index', ['product' => $query->id]).'"> Variants</a></li>
-            //     </ul>
-            // </div>';
+            $moreBtn = '<div class="btn-group dropstart" style="margin-left:3px; padding: 3px;">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-cog"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item has-icon" href="'.route('vendor.products-image-gallery.index', ['product' => $query->id]).'"> Image Gallery</a></li>
+                </ul>
+            </div>';
 
-            return $editBtn.$deleteBtn;
-            // .$moreBtn;
+            return $moreBtn.$editBtn.$deleteBtn;
         })
         ->addColumn('image', function($query){
             return "<img width='70px' src='".asset($query->thumb_image)."' ></img>";
