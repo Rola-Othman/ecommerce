@@ -10,18 +10,18 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminVendorProfileController extends Controller
+class VendorShopProfileController extends Controller
 {
     use FileUpload;
     /**
-     * عرض قائمة ملفات تعريف البائعين
-     * Display a listing of vendor profiles.
+     ** عرض قائمة منتجات البائعين
+     ** display the vendor's shop profile.
      * @return View
      */
     public function index(): View
     {
         $profile = Vendor::where('user_id', Auth::user()->id)->first();
-        return view('admin.vendor-profile.index', compact('profile'));
+        return view('vendor.shop-profile.index', compact('profile'));
     }
 
     /**
@@ -33,12 +33,12 @@ class AdminVendorProfileController extends Controller
     }
 
     /**
-     * التعديل على ملف تعريف البائع
-     * Update the vendor profile.
+     ** حفظ ملف تعريف المتجر للبائع
+     ** Store the vendor's shop profile.
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request):RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'banner' => ['nullable', 'image', 'max:3000'],
@@ -56,12 +56,12 @@ class AdminVendorProfileController extends Controller
 
         if ($request->hasFile('banner')) {
             $bannerPath = $this->uploadFile($request->file('banner'));
-            $this->deleteFile($vendor->image); 
+            $this->deleteFile($vendor->image);
             $vendor->banner = $bannerPath;
         }
 
-        $vendor->phone = $request->phone;
         $vendor->shop_name = $request->shop_name;
+        $vendor->phone = $request->phone;
         $vendor->email = $request->email;
         $vendor->address = $request->address;
         $vendor->description = $request->description;
@@ -70,7 +70,7 @@ class AdminVendorProfileController extends Controller
         $vendor->insta_link = $request->insta_link;
         $vendor->save();
 
-      flash()->success('Update successfully.');
+        flash()->success('Update successfully.');
 
         return redirect()->back();
     }

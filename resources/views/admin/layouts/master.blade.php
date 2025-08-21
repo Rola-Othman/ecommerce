@@ -102,6 +102,15 @@
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
     <script>
+        /** date picker **/
+        $('.datepicker').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            },
+            singleDatePicker: true
+        });
+    </script>
+    <script>
         @if ($errors->any())
             @foreach ($errors->all() as $error)
                 toastr.error('{{ $error }}');
