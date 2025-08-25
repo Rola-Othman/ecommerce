@@ -9507,3 +9507,217 @@ a:not([href]):not([class]):hover {
     margin-left: 4px !important;
 }
 
+
+.btn-space-right {
+    margin-right: 5px;
+    color: #fff;
+}
+
+/* 
+.page-item.disabled > .page-link {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    text-align: center;
+    line-height: 35px;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all linear 0.3s;
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -ms-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    border-radius: 50%;
+    border: 1px solid #08C;
+    margin-right: 10px;
+}
+
+.page-item.active > .page-link{
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    text-align: center;
+    line-height: 35px;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all linear 0.3s;
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -ms-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    border-radius: 50%;
+    border: 1px solid #08C;
+    margin-right: 10px;
+}
+
+.page-item > .page-link{
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    text-align: center;
+    line-height: 35px;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all linear 0.3s;
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -ms-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    border-radius: 100% !important;;
+    border: 1px solid #08C;
+    margin-right: 10px;
+} */
+
+
+.wsus__new {
+
+    border-radius: 30px;
+    opacity: 0.3;
+    transition: all linear 0.3s;
+    -webkit-transition: all linear 0.3s ease;
+    -moz-transition: all linear 0.3s ease;
+    -ms-transition: all linear 0.3s ease;
+    -o-transition: all linear 0.3s ease;
+}
+
+#sticky_pro_zoom {
+    z-index: 9999 !important;
+}
+
+.product_qty_wrapper {
+  display: flex;
+}
+
+.product_qty_wrapper>.product-qty {
+    width: 43px;
+    height: 36px;
+    padding-left: 5px;
+}
+
+.wsus__cart_list .wsus__pro_name {
+    width: 285px;
+}
+.wsus__mini_cart .wsus__cart_img img {
+  height: 70px;
+  object-fit: cover;
+}
+
+#card-element {
+  padding: 18px;
+}
+
+.razorpay-payment-button {
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #fff;
+    background: #08C;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    transition: all linear 0.3s;
+    -webkit-transition: all linear 0.3s ease;
+    -moz-transition: all linear 0.3s ease;
+    -ms-transition: all linear 0.3s ease;
+    -o-transition: all linear 0.3s ease;
+    width: 100%;
+}
+
+.add_cart_two {
+    position: static;
+padding: 0px 19px;
+font-size: 16px;
+width: auto;
+height: 40px;
+color: #fff;
+border: 1px solid #08C;
+background: #08C;
+margin-right: 10px;
+}
+
+.add_cart_two:hover {
+
+color: #08C;
+border: 1px solid #08C;
+background: #fff;
+
+}
+
+.wsus__pro_det_review .wsus__comment_text ul li {
+    width: 20% !important;
+    height: 20% !important;
+    margin-right: 10px;
+    float: left;
+  }
+
+.wsus__hot_deals__single_img img {
+  width: 200px !important;
+  height: 150px !important;
+  object-fit: cover;
+}
+.add_cart {
+  border: 0px !important;
+}
+
+
+/* Loader */
+.loader {
+    width: 16px;
+    height: 16px;
+    box-shadow: 0 30px, 0 -30px;
+    border-radius: 4px;
+    background: currentColor;
+    display: block;
+    margin: -50px auto 0;
+    position: relative;
+    color: #FFF;
+    transform: translateY(30px);
+    box-sizing: border-box;
+    animation: animloader 2s ease infinite;
+  }
+  .loader::after,
+  .loader::before {
+    content: '';
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    box-shadow: 0 30px, 0 -30px;
+    border-radius: 4px;
+    background: currentColor;
+    color: #FFF;
+    position: absolute;
+    left: 30px;
+    top: 0;
+    animation: animloader 2s 0.2s ease infinite;
+  }
+  .loader::before {
+    animation-delay: 0.4s;
+    left: 60px;
+  }
+
+  @keyframes animloader {
+    0% {
+      top: 0;
+      color: white;
+    }
+    50% {
+      top: 30px;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    100% {
+      top: 0;
+      color: white;
+    }
+  }
+
+
+  .msg-notification {
+    border: 5px solid #08c !important;
+  }
+  .wsus__chat_area_footer {
+    width: 100% !important;
+    bottom: 0 !important;
+    /* position: absolute !important; */
+  }
+
