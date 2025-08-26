@@ -9513,7 +9513,7 @@ a:not([href]):not([class]):hover {
     color: #fff;
 }
 
-/* 
+
 .page-item.disabled > .page-link {
     width: 35px;
     height: 35px;
@@ -9566,7 +9566,7 @@ a:not([href]):not([class]):hover {
     border-radius: 100% !important;;
     border: 1px solid #08C;
     margin-right: 10px;
-} */
+}
 
 
 .wsus__new {

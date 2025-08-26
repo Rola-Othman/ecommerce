@@ -143,6 +143,7 @@
 
     <!--main/custom js-->
     <script src="{{ asset('frotend/js/main.js') }}"></script>
+    @stack('scripts')
     <script>
         @if ($errors->any())
             @foreach ($errors->all() as $error)
