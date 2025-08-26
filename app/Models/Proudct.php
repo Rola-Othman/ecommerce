@@ -20,4 +20,14 @@ class Proudct extends Model
     {
         return $this->hasMany(ProductImageGallery::class, 'product_id', 'id');
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class, 'product_id', 'id');
+    }
 }

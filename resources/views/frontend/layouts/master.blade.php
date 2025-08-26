@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="{{ asset('frotend/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('frotend/css/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frotend/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/jquery.nice-number.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/jquery.calendar.css') }}">
