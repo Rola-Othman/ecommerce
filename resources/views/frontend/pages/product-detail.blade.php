@@ -2,8 +2,8 @@
 
 @section('content')
     <!--==========================
-                                      PRODUCT MODAL VIEW START
-                                    ===========================-->
+                                          PRODUCT MODAL VIEW START
+                                        ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -146,13 +146,13 @@
         </div>
     </section>
     <!--==========================
-                                      PRODUCT MODAL VIEW END
-                                    ===========================-->
+                                          PRODUCT MODAL VIEW END
+                                        ===========================-->
 
 
     <!--============================
-                                        BREADCRUMB START
-                                    ==============================-->
+                                            BREADCRUMB START
+                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -170,13 +170,13 @@
         </div>
     </section>
     <!--============================
-                                        BREADCRUMB END
-                                    ==============================-->
+                                            BREADCRUMB END
+                                        ==============================-->
 
 
     <!--============================
-                                        PRODUCT DETAILS START
-                                    ==============================-->
+                                            PRODUCT DETAILS START
+                                        ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -222,11 +222,11 @@
                             @endif
 
                             @if (checkDiscount($product))
-                                <h4>{{ $product->offer_price }}
-                                    <del>{{ $product->price }}</del>
+                                <h4>{{$settings->currency_icon}}{{ $product->offer_price }}
+                                    <del>{{$settings->currency_icon}}{{ $product->price }}</del>
                                 </h4>
                             @else
-                                <h4>{{ $product->price }}</h4>
+                                <h4>{{$settings->currency_icon}}{{ $product->price }}</h4>
                             @endif
                             <p class="review">
                                 <i class="fas fa-star"></i>
@@ -249,7 +249,7 @@
                                                 @foreach ($variant->productVariantItems as $variantItem)
                                                     <option value="{{ $variantItem->id }}"
                                                         {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
-                                                        {{ $variantItem->name }} (${{ $variantItem->price }})
+                                                        {{ $variantItem->name }} ({{$settings->currency_icon}}{{ $variantItem->price }})
                                                     </option>
                                                 @endforeach
 
@@ -373,7 +373,7 @@
                                             </div>
                                             <div class="col-xl-6 col-xxl-7 col-md-6 mt-4 mt-md-0">
                                                 <div class="wsus__pro_det_vendor_text">
-                                                    <h4>{{$product->vendor->user->name}}</h4>
+                                                    <h4>{{ $product->vendor->user->name }}</h4>
                                                     <p class="rating">
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
@@ -382,16 +382,16 @@
                                                         <i class="fas fa-star"></i>
                                                         <span>(41 review)</span>
                                                     </p>
-                                                    <p><span>Store Name:</span> {{$product->vendor->shop_name}}</p>
-                                                    <p><span>Address:</span> {{$product->vendor->address}}</p>
-                                                    <p><span>Phone:</span> {{$product->vendor->phone}}</p>
-                                                    <p><span>mail:</span> {{$product->vendor->email}}</p>
+                                                    <p><span>Store Name:</span> {{ $product->vendor->shop_name }}</p>
+                                                    <p><span>Address:</span> {{ $product->vendor->address }}</p>
+                                                    <p><span>Phone:</span> {{ $product->vendor->phone }}</p>
+                                                    <p><span>mail:</span> {{ $product->vendor->email }}</p>
                                                     <a href="vendor_details.html" class="see_btn">visit store</a>
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
                                                 <div class="wsus__vendor_details">
-                                                    {!!$product->vendor->description!!}
+                                                    {!! $product->vendor->description !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -576,13 +576,13 @@
         </div>
     </section>
     <!--============================
-                                        PRODUCT DETAILS END
-                                    ==============================-->
+                                            PRODUCT DETAILS END
+                                        ==============================-->
 
 
     <!--============================
-                                        RELATED PRODUCT START
-                                    ==============================-->
+                                            RELATED PRODUCT START
+                                        ==============================-->
     <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -746,6 +746,6 @@
         </div>
     </section>
     <!--============================
-                                        RELATED PRODUCT END
-                                    ==============================-->
+                                            RELATED PRODUCT END
+                                        ==============================-->
 @endsection

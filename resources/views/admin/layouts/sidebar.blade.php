@@ -50,7 +50,8 @@
                                'admin.products-variant-item.*',
                                'admin.reviews.*',
                            ]) }}">
-                           <a class="nav-link" href="{{ route('admin.products.index') }}">Products</a></li>
+                           <a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
+                       </li>
 
                        <li class="{{ setActive(['admin.seller-products.*']) }}"><a class="nav-link"
                                href="{{ route('admin.seller-products.index') }}">Seller Products</a></li>
@@ -64,9 +65,9 @@
                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                        <span>Ecommerce</span></a>
                    <ul class="dropdown-menu">
-                       <li
-                           class="{{ setActive(['admin.vendor-profile.*', 'admin.flash-sale.*']) }}">
-                           <a class="nav-link" href="{{ route('admin.vendor-profile.index') }}">Vendor Profile</a></li>
+                       <li class="{{ setActive(['admin.vendor-profile.*', 'admin.flash-sale.*']) }}">
+                           <a class="nav-link" href="{{ route('admin.vendor-profile.index') }}">Vendor Profile</a>
+                       </li>
 
                        <li class="{{ setActive(['admin.flash-sale.*']) }}"><a class="nav-link"
                                href="{{ route('admin.flash-sale.index') }}">Flash Sale</a></li>
@@ -90,7 +91,7 @@
                        <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
                    </ul>
                </li> --}}
-               <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li>
+               <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i> <span>Settings</span></a></li>
            </ul>
            <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
