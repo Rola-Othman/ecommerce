@@ -71,6 +71,9 @@
 
                        <li class="{{ setActive(['admin.flash-sale.*']) }}"><a class="nav-link"
                                href="{{ route('admin.flash-sale.index') }}">Flash Sale</a></li>
+
+                       <li class="{{ setActive(['admin.coupons.*']) }}"><a class="nav-link"
+                               href="{{ route('admin.coupons.index') }}">Coupons</a></li>       
                    </ul>
                </li>
                <li class="dropdown {{ setActive(['admin.slider.*']) }}">

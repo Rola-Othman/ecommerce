@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
@@ -82,4 +83,8 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   /** setting routes */
   Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
   Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
+  /** Coupon routes */
+  Route::resource('coupons', CouponController::class);
+  Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');
+
 });
