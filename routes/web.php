@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontentProductController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -13,7 +14,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale.index');
 /** Product detail route */
 Route::get('/product-detail/{slug}', [FrontentProductController::class, 'showProduct'])->name('product-detail.index');
-
+/** Cart routes */
+ Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+ Route::get('/cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
 
 
 Route::middleware('auth')->group(function () {

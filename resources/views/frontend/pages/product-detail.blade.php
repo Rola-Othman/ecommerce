@@ -1,9 +1,11 @@
 @extends('frontend.layouts.master')
-
+@section('title')
+    {{ $settings->site_name }} || Product Details
+@endsection
 @section('content')
     <!--==========================
-                                          PRODUCT MODAL VIEW START
-                                        ===========================-->
+                                                  PRODUCT MODAL VIEW START
+                                                ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -62,29 +64,8 @@
                                     </p>
                                     <p class="description">{{ $product->long_description }}</p>
 
-                                    <div class="wsus_pro_hot_deals">
-                                        <h5>offer ending time : </h5>
-                                        <div class="simply-countdown simply-countdown-one"></div>
-                                    </div>
-                                    <div class="wsus_pro_det_color">
-                                        <h5>color :</h5>
-                                        <ul>
-                                            <li><a class="blue" href="#"><i class="far fa-check"></i></a></li>
-                                            <li><a class="orange" href="#"><i class="far fa-check"></i></a></li>
-                                            <li><a class="yellow" href="#"><i class="far fa-check"></i></a></li>
-                                            <li><a class="black" href="#"><i class="far fa-check"></i></a></li>
-                                            <li><a class="red" href="#"><i class="far fa-check"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="wsus_pro__det_size">
-                                        <h5>size :</h5>
-                                        <ul>
-                                            <li><a href="#">S</a></li>
-                                            <li><a href="#">M</a></li>
-                                            <li><a href="#">L</a></li>
-                                            <li><a href="#">XL</a></li>
-                                        </ul>
-                                    </div>
+
+
                                     <div class="wsus__quentity">
                                         <h5>quentity :</h5>
                                         <form class="select_number">
@@ -146,13 +127,13 @@
         </div>
     </section>
     <!--==========================
-                                          PRODUCT MODAL VIEW END
-                                        ===========================-->
+                                                  PRODUCT MODAL VIEW END
+                                                ===========================-->
 
 
     <!--============================
-                                            BREADCRUMB START
-                                        ==============================-->
+                                                    BREADCRUMB START
+                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -170,13 +151,13 @@
         </div>
     </section>
     <!--============================
-                                            BREADCRUMB END
-                                        ==============================-->
+                                                    BREADCRUMB END
+                                                ==============================-->
 
 
     <!--============================
-                                            PRODUCT DETAILS START
-                                        ==============================-->
+                                                    PRODUCT DETAILS START
+                                                ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -222,11 +203,11 @@
                             @endif
 
                             @if (checkDiscount($product))
-                                <h4>{{$settings->currency_icon}}{{ $product->offer_price }}
-                                    <del>{{$settings->currency_icon}}{{ $product->price }}</del>
+                                <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
+                                    <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
                                 </h4>
                             @else
-                                <h4>{{$settings->currency_icon}}{{ $product->price }}</h4>
+                                <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
                             @endif
                             <p class="review">
                                 <i class="fas fa-star"></i>
@@ -239,39 +220,45 @@
                             <p class="description">{!! $product->short_description !!}</p>
 
 
-                            <div class="wsus__selectbox">
-                                <div class="row">
-                                    @foreach ($product->variants as $variant)
-                                        <div class="col-xl-6 col-sm-6">
-                                            <h5 class="mb-2">{{ $variant->name }}:</h5>
-                                            <select class="select_2" name="variants_items[]">
-                                                <option>default select</option>
-                                                @foreach ($variant->productVariantItems as $variantItem)
-                                                    <option value="{{ $variantItem->id }}"
-                                                        {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
-                                                        {{ $variantItem->name }} ({{$settings->currency_icon}}{{ $variantItem->price }})
-                                                    </option>
-                                                @endforeach
+                            <form class="shopping-cart-form">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <div class="wsus__selectbox">
+                                    <div class="row">
+                                        @foreach ($product->variants as $variant)
+                                            <div class="col-xl-6 col-sm-6">
+                                                <h5 class="mb-2">{{ $variant->name }}:</h5>
+                                                <select class="select_2" name="variants_items[]">
+                                                    <option>default select</option>
+                                                    @foreach ($variant->productVariantItems as $variantItem)
+                                                        <option value="{{ $variantItem->id }}"
+                                                            {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
+                                                            {{ $variantItem->name }}
+                                                            ({{ $settings->currency_icon }}{{ $variantItem->price }})
+                                                        </option>
+                                                    @endforeach
 
-                                            </select>
-                                        </div>
-                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="wsus__quentity">
-                                <h5>quentity :</h5>
-                                <form class="select_number">
-                                    <input class="number_area" type="text" min="1" max="100"
-                                        value="1" />
-                                </form>
-                            </div>
+                                <div class="wsus__quentity">
+                                    <h5>quentity :</h5>
+                                    <div class="select_number">
+                                        <input name='qty' class="number_area" type="text" min="1"
+                                            max="100" value="1" />
+                                    </div>
+                                </div>
 
-                            <ul class="wsus__button_area">
-                                <li><a class="add_cart" href="#">add to cart</a></li>
-                                <li><a class="buy_now" href="#">buy now</a></li>
-                                <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
-                            </ul>
+                                <ul class="wsus__button_area">
+                                    <li><button type="submit" class="add_cart">add to cart</button></li>
+                                    <li><a class="buy_now" href="#">buy now</a></li>
+                                    <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="far fa-random"></i></a></li>
+                                </ul>
+
+                            </form>
+
                             <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                             <div class="wsus__pro_det_share">
                                 <h5>share :</h5>
@@ -576,14 +563,14 @@
         </div>
     </section>
     <!--============================
-                                            PRODUCT DETAILS END
-                                        ==============================-->
+                                                    PRODUCT DETAILS END
+                                                ==============================-->
 
 
     <!--============================
-                                            RELATED PRODUCT START
-                                        ==============================-->
-    <section id="wsus__flash_sell">
+                                                    RELATED PRODUCT START
+                                                ==============================-->
+    {{-- <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
@@ -744,8 +731,39 @@
 
             </div>
         </div>
-    </section>
+    </section> --}}
     <!--============================
-                                            RELATED PRODUCT END
-                                        ==============================-->
+                                                    RELATED PRODUCT END
+                                                ==============================-->
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.shopping-cart-form').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = $(this).serialize();
+                console.log(formData);
+                // var product_id = {{ $product->id }};
+                // var quantity = $('.number_area').val();
+                // var variant_id = $('input[name="variant"]:checked').val();
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('add-to-cart') }}",
+                    data: formData,
+                    success: function(data) {
+
+                    },
+                    error: function(xhr, status, error) {
+
+                    }
+                });
+            })
+        });
+    </script>
+@endpush

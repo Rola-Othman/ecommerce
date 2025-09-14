@@ -1,5 +1,7 @@
 @extends('frontend.layouts.master')
-
+@section('title')
+{{$settings->site_name}} || Flash Sale
+@endsection
 @section('content')
     <!--============================
                     BREADCRUMB START

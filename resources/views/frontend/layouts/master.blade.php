@@ -6,7 +6,11 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>Sazao || e-Commerce HTML Template</title>
+    <title>
+        @yield('title')
+    </title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="{{ asset('frotend/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/bootstrap.min.css') }}">
@@ -50,6 +54,16 @@
     <!--==========================
         POP UP START
     ===========================-->
+    {{-- <section class="product_popup_modal">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content product-modal-content">
+
+                </div>
+            </div>
+        </div>
+    </section> --}}
+    
     <!-- <section id="wsus__pop_up">
         <div class="wsus__pop_up_center">
             <div class="wsus__pop_up_text">

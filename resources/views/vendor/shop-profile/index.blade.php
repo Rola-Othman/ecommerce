@@ -1,8 +1,11 @@
 @extends('vendor.layouts.master')
+@section('title')
+    {{ $settings->site_name }} || Shop Profile
+@endsection
 @section('content')
     <!--=============================
-                                                                            DASHBOARD START
-                                                                          ==============================-->
+                                                                                DASHBOARD START
+                                                                              ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
             @include('vendor.layouts.sidebar')
@@ -27,7 +30,7 @@
                                         <label>Banner</label>
                                         <input type="file" class="form-control" name="banner">
                                     </div>
-                                    
+
                                     <div class="form-group wsus__input">
                                         <label>Shop Name</label>
                                         <input type="text" class="form-control" name="shop_name"
@@ -85,6 +88,6 @@
         </div>
     </section>
     <!--=============================
-                                                                            DASHBOARD START
-                                                                          ==============================-->
+                                                                                DASHBOARD START
+                                                                              ==============================-->
 @endsection
