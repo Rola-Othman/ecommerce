@@ -7,10 +7,12 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>One Shop || e-Commerce HTML Template</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="{{ asset('frotend/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('frotend/css/css/select2.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('frotend/css/css/select2.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('frotend/css/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/jquery.nice-number.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/jquery.calendar.css') }}">
@@ -21,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('frotend/css/ranger_style.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/jquery.classycountdown.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/venobox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/select2/dist/css/select2.min.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -72,7 +75,9 @@
     <!--font-awesome js-->
     <script src="{{ asset('frotend/js/Font-Awesome.js') }}"></script>
     <!--select2 js-->
-    <script src="{{ asset('frotend/js/select2.min.js') }}"></script>
+    {{-- <script src="{{ asset('frotend/js/select2.min.js') }}"></script> --}}
+    <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+
     <!--slick slider js-->
     <script src="{{ asset('frotend/js/slick.min.js') }}"></script>
     <!--simplyCountdown js-->
@@ -99,6 +104,7 @@
     <script src="{{ asset('frotend/js/venobox.min.js') }}"></script>
     <!--classycountdown js-->
     <script src="{{ asset('frotend/js/jquery.classycountdown.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -111,6 +117,63 @@
             @endforeach
         @endif
     </script>
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $('body').on('click', '.delete-item', function(event) {
+                event.preventDefault();
+
+                let deleteUrl = $(this).attr('href');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: 'DELETE',
+                            url: deleteUrl,
+
+                            success: function(data) {
+
+                                if (data.status == 'success') {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        data.message,
+                                        'success'
+                                    )
+                                    window.location.reload();
+                                } else if (data.status == 'error') {
+                                    Swal.fire(
+                                        'Cant Delete',
+                                        data.message,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                            }
+                        })
+                    }
+                })
+            })
+
+        })
+    </script>
+    @stack('scripts')
 </body>
 
 </html>

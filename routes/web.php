@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontentProductController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileControllrt;
 use App\Http\Controllers\ProfileController;
@@ -30,4 +31,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   Route::get('/profile', [UserProfileControllrt::class, 'index'])->name('profile');
   Route::post('/profile', [UserProfileControllrt::class, 'updateProfile'])->name('profile.update');
   Route::post('/profile/update/password', [UserProfileControllrt::class, 'updatePassword'])->name('password.update');
+      /** User Address Route */
+    Route::resource('address', UserAddressController::class);
 });

@@ -8,6 +8,8 @@
      <ul class="dashboard_link">
          <li><a class="active" href="dsahboard.html"><i class="fas fa-tachometer"></i>Dashboard</a></li>
          <li><a href="dsahboard_order.html"><i class="fas fa-list-ul"></i> Orders</a></li>
+         <li><a class="{{ setActive(['user.address.*']) }}" href="{{ route('user.address.index') }}"><i
+                     class="fal fa-gift-card"></i> Addresses</a></li>
          <li><a href="dsahboard_download.html"><i class="far fa-cloud-download-alt"></i> Downloads</a></li>
          <li><a href="dsahboard_review.html"><i class="far fa-star"></i> Reviews</a></li>
          <li><a href="dsahboard_wishlist.html"><i class="far fa-heart"></i> Wishlist</a></li>

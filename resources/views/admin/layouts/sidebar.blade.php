@@ -61,7 +61,8 @@
                        </li>
                    </ul>
                </li>
-               <li class="dropdown {{ setActive(['admin.slider.*']) }}">
+               <li
+                   class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.coupons.*', 'admin.shipping-rule.*']) }}">
                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                        <span>Ecommerce</span></a>
                    <ul class="dropdown-menu">
@@ -73,7 +74,10 @@
                                href="{{ route('admin.flash-sale.index') }}">Flash Sale</a></li>
 
                        <li class="{{ setActive(['admin.coupons.*']) }}"><a class="nav-link"
-                               href="{{ route('admin.coupons.index') }}">Coupons</a></li>       
+                               href="{{ route('admin.coupons.index') }}">Coupons</a></li>
+
+                       <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"
+                               href="{{ route('admin.shipping-rule.index') }}">Shipping Rule</a></li>
                    </ul>
                </li>
                <li class="dropdown {{ setActive(['admin.slider.*']) }}">
@@ -94,7 +98,8 @@
                        <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
                    </ul>
                </li> --}}
-               <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i> <span>Settings</span></a></li>
+               <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
+                       <span>Settings</span></a></li>
            </ul>
            <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
