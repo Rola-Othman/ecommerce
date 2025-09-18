@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--==========================
-                                                  PRODUCT MODAL VIEW START
-                                                ===========================-->
+                                                                          PRODUCT MODAL VIEW START
+                                                                        ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -47,8 +47,13 @@
                             <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                 <div class="wsus__pro_details_text">
                                     <a class="title" href="#">{{ $product->name }}</a>
-                                    <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }}
-                                        item)</p>
+                                    @if ($product->qty > 0)
+                                        <p class="wsus__stock_area"><span class="in_stock">in stock</span>
+                                            ({{ $product->qty }} item)</p>
+                                    @elseif ($product->qty === 0)
+                                        <p class="wsus__stock_area"><span class="in_stock">stock out</span>
+                                            ({{ $product->qty }} item)</p>
+                                    @endif
                                     @if (checkDiscount($product))
                                         <h4>${{ $product->offer_price }} <del>${{ $product->price }}</del></h4>
                                     @else
@@ -127,13 +132,13 @@
         </div>
     </section>
     <!--==========================
-                                                  PRODUCT MODAL VIEW END
-                                                ===========================-->
+                                                                          PRODUCT MODAL VIEW END
+                                                                        ===========================-->
 
 
     <!--============================
-                                                    BREADCRUMB START
-                                                ==============================-->
+                                                                            BREADCRUMB START
+                                                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -151,13 +156,13 @@
         </div>
     </section>
     <!--============================
-                                                    BREADCRUMB END
-                                                ==============================-->
+                                                                            BREADCRUMB END
+                                                                        ==============================-->
 
 
     <!--============================
-                                                    PRODUCT DETAILS START
-                                                ==============================-->
+                                                                            PRODUCT DETAILS START
+                                                                        ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -225,20 +230,23 @@
                                 <div class="wsus__selectbox">
                                     <div class="row">
                                         @foreach ($product->variants as $variant)
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">{{ $variant->name }}:</h5>
-                                                <select class="select_2" name="variants_items[]">
-                                                    <option>default select</option>
-                                                    @foreach ($variant->productVariantItems as $variantItem)
-                                                        <option value="{{ $variantItem->id }}"
-                                                            {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
-                                                            {{ $variantItem->name }}
-                                                            ({{ $settings->currency_icon }}{{ $variantItem->price }})
-                                                        </option>
-                                                    @endforeach
-
-                                                </select>
-                                            </div>
+                                            @if ($variant->status != 0)
+                                                <div class="col-xl-6 col-sm-6">
+                                                    <h5 class="mb-2">{{ $variant->name }}:</h5>
+                                                    <select class="select_2" name="variants_items[]">
+                                                        <option>default select</option>
+                                                        @foreach ($variant->productVariantItems as $variantItem)
+                                                            @if ($variantItem->status != 0)
+                                                                <option value="{{ $variantItem->id }}"
+                                                                    {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
+                                                                    {{ $variantItem->name }}
+                                                                    ({{ $settings->currency_icon }}{{ $variantItem->price }})
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
@@ -563,13 +571,13 @@
         </div>
     </section>
     <!--============================
-                                                    PRODUCT DETAILS END
-                                                ==============================-->
+                                                                            PRODUCT DETAILS END
+                                                                        ==============================-->
 
 
     <!--============================
-                                                    RELATED PRODUCT START
-                                                ==============================-->
+                                                                            RELATED PRODUCT START
+                                                                        ==============================-->
     {{-- <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -733,37 +741,6 @@
         </div>
     </section> --}}
     <!--============================
-                                                    RELATED PRODUCT END
-                                                ==============================-->
+                                                                            RELATED PRODUCT END
+                                                                        ==============================-->
 @endsection
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('.shopping-cart-form').on('submit', function(e) {
-                e.preventDefault();
-
-                let formData = $(this).serialize();
-                console.log(formData);
-                // var product_id = {{ $product->id }};
-                // var quantity = $('.number_area').val();
-                // var variant_id = $('input[name="variant"]:checked').val();
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('add-to-cart') }}",
-                    data: formData,
-                    success: function(data) {
-
-                    },
-                    error: function(xhr, status, error) {
-
-                    }
-                });
-            })
-        });
-    </script>
-@endpush

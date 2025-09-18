@@ -13,10 +13,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale.index');
 /** Product detail route */
-Route::get('/product-detail/{slug}', [FrontentProductController::class, 'showProduct'])->name('product-detail.index');
+Route::get('/product-detail/{slug}', [FrontentProductController::class, 'showProduct'])->name('product-detail');
 /** Cart routes */
- Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
- Route::get('/cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::get('/cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
+Route::post('cart/update-quantity', [CartController::class, 'updateProductQty'])->name('cart.update-quantity');
+Route::get('clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
+Route::get('cart/remove-product/{rowId}', [CartController::class, 'removeProduct'])->name('cart.remove-product');
+Route::get('cart-count', [CartController::class, 'getCartCount'])->name('cart-count');
+Route::get('cart-products', [CartController::class, 'getCartProducts'])->name('cart-products');
+Route::post('cart/remove-sidebar-product', [CartController::class, 'removeSidebarProduct'])->name('cart.remove-sidebar-product');
+Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-product-total');
 
 
 Route::middleware('auth')->group(function () {
@@ -34,6 +41,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   Route::get('/profile', [UserProfileControllrt::class, 'index'])->name('profile');
   Route::post('/profile', [UserProfileControllrt::class, 'updateProfile'])->name('profile.update');
   Route::post('/profile/update/password', [UserProfileControllrt::class, 'updatePassword'])->name('password.update');
-      /** User Address Route */
-    Route::resource('address', UserAddressController::class);
+  /** User Address Route */
+  Route::resource('address', UserAddressController::class);
 });

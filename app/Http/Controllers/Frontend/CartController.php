@@ -10,21 +10,25 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
-    /** Show cart page  */
+    /**
+     ** Show cart page  
+     ** عرض صفحة السلة
+     * @return View
+     */
     public function cartDetails()
     {
-        // $cartItems = Cart::content();
-
-        // if(count($cartItems) === 0){
-        //     Session::forget('coupon');
-        //     toastr('Please add some products in your cart for view the cart page', 'warning', 'Cart is empty!');
-        //     return redirect()->route('home');
-        // }
+        $cartItems = Cart::content();
+        if (count($cartItems) === 0) {
+            // Session::forget('coupon');
+            flash()->warning('Please add some products in your cart for view the cart page', ['title' => 'Cart is empty!']);
+            // toastr('Please add some products in your cart for view the cart page', 'warning', 'Cart is empty!');
+            return redirect()->route('home');
+        }
 
         // $cartpage_banner_section = Adverisement::where('key', 'cartpage_banner_section')->first();
         // $cartpage_banner_section = json_decode($cartpage_banner_section?->value);
 
-        return view('frontend.pages.cart-detail');
+        return view('frontend.pages.cart-detail', compact('cartItems'));
         // return view('frontend.pages.cart-detail', compact('cartItems', 'cartpage_banner_section'));
     }
 
@@ -36,7 +40,12 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $product = Proudct::findOrFail($request->product_id);
-
+        // check product quantity
+        if ($product->qty === 0) {
+            return response(['status' => 'error', 'message' => 'Product stock out']);
+        } elseif ($product->qty < $request->qty) {
+            return response(['status' => 'error', 'message' => 'Quantity not available in our stock']);
+        }
         /** استرجاع الخصائص لارسالها للسلة */
         $variants = [];
         $variantTotalAmount = 0;
@@ -76,5 +85,120 @@ class CartController extends Controller
         $cartData['options']['slug'] = $product->slug;
         Cart::add($cartData);
         return response(['status' => 'success', 'message' => 'Added to cart successfully!']);
+    }
+
+    /**
+     ** Update product quantity
+     ** تحديث كمية المنتج
+     * @param Request $request
+     */
+    public function updateProductQty(Request $request)
+    {
+        $productId = Cart::get($request->rowId)->id;
+        $product = Proudct::findOrFail($productId);
+
+        // check product quantity
+        if ($product->qty === 0) {
+            return response(['status' => 'error', 'message' => 'Product stock out']);
+        } elseif ($product->qty < $request->qty) {
+            return response(['status' => 'error', 'message' => 'Quantity not available in our stock']);
+        }
+
+        Cart::update($request->rowId, $request->quantity);
+        $productTotal = $this->getProductTotal($request->rowId);
+
+        return response(['status' => 'success', 'message' => 'Product Quantity Updated!', 'product_total' => $productTotal]);
+    }
+    /**
+     ** get product total
+     **   اجمالي المنتج
+     * @param string $rowId
+     */
+    public function getProductTotal($rowId)
+    {
+        $product = Cart::get($rowId);
+        $total = ($product->price + $product->options->variants_total) * $product->qty;
+        return $total;
+    }
+
+    /** 
+     **clear all cart products
+     ** مسح جميع المنتجات من السلة
+     * @return Response
+     */
+    public function clearCart()
+    {
+        Cart::destroy();
+
+        return response(['status' => 'success', 'message' => 'Cart cleared successfully']);
+    }
+
+    /**
+     ** Remove product form cart
+     ** ازالة المنتج من السلة
+     * @param string $rowId
+     */
+    public function removeProduct($rowId)
+    {
+        Cart::remove($rowId);
+        flash()->success('Product removed successfully.');
+        return redirect()->back();
+    }
+
+    /**
+     **  Get cart count 
+     ** عدد المنتجات في السلة 
+     */
+    public function getCartCount()
+    {
+        return Cart::content()->count();
+    }
+
+    /** 
+     ** Get all cart products 
+     ** جلب جميع المنتجات في السلة
+     */
+    public function getCartProducts()
+    {
+        return Cart::content();
+    }
+
+    /**
+     ** Romve product form sidebar cart
+     ** ازالة المنتج من سلة الشريط الجانبي
+     * @param Request $request
+     */
+    public function removeSidebarProduct(Request $request)
+    {
+        Cart::remove($request->rowId);
+
+        return response(['status' => 'success', 'message' => 'Product removed successfully!']);
+    }
+
+
+    /**
+     ** get cart total amount
+     ** اجمالي السلة
+     */
+    public function cartTotal()
+    {
+        $total = 0;
+        // // OLD CODE
+        // foreach (Cart::content() as $product) {
+        //     $total += $this->getProductTotal($product->rowId);
+        // }
+
+        // // NEW CODE
+        // $cartItems = Cart::content();
+        // $cartItems->map(function ($item) use (&$total) {
+        //     $total += $this->getProductTotal($item->rowId);
+        //     return $total;
+        // });
+
+        // NEW CODE
+        $total = Cart::content()->sum(function ($item) {
+            return $this->getProductTotal($item->rowId);
+        });
+        return $total;
     }
 }

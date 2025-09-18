@@ -1,5 +1,7 @@
 <?php
 
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 /** Set sidebar items active */
 function setActive(array $routes)
 {
@@ -26,7 +28,8 @@ function checkDiscount($product)
 
 /** Calculate discount percent */
 
-function calculateDiscountPercent($originalPrice, $discountPrice) {
+function calculateDiscountPercent($originalPrice, $discountPrice)
+{
     $discountAmount = $originalPrice - $discountPrice;
     $discountPercent = ($discountAmount / $originalPrice) * 100;
 
@@ -57,4 +60,19 @@ function productType($type)
             return '';
             break;
     }
+}
+
+/** get total cart amount */
+function getCartTotal()
+{
+    $total = 0;
+    // foreach(Cart::content() as $product){
+    //     $total += ($product->price + $product->options->variants_total) * $product->qty;
+    // }
+    // return $total;
+
+    $total = Cart::content()->sum(function ($product) {
+        return ($product->price + $product->options->variants_total) * $product->qty;
+    });
+    return $total;
 }

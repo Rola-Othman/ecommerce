@@ -63,7 +63,7 @@
             </div>
         </div>
     </section> --}}
-    
+
     <!-- <section id="wsus__pop_up">
         <div class="wsus__pop_up_center">
             <div class="wsus__pop_up_text">
@@ -154,9 +154,11 @@
     <script src="{{ asset('frotend/js/jquery.classycountdown.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--main/custom js-->
     <script src="{{ asset('frotend/js/main.js') }}"></script>
+    @include('frontend.layouts.scripts')
     @stack('scripts')
     <script>
         @if ($errors->any())
