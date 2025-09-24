@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Backend\CheckoutController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontentProductController;
@@ -54,4 +54,10 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   /** Payment Routes */
   Route::get('payment', [PaymentController::class, 'index'])->name('payment');
   Route::get('payment-success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+
+  Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+  Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+  Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
+  /** Stripe routes */
+  Route::post('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
 });

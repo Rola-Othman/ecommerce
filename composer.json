@@ -13,6 +13,8 @@
         "anayarojo/shoppingcart": "^4.2",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "srmklive/paypal": "~3.0",
+        "stripe/stripe-php": "^17.6",
         "yajra/laravel-datatables": "^12.0",
         "yoeunes/toastr": "^3.1"
     },

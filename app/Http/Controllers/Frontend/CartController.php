@@ -81,7 +81,7 @@ class CartController extends Controller
         $cartData['price'] =  $productPrice; //$product->price * $request->qty;
         $cartData['weight'] = 10;
         $cartData['options']['variants'] = $variants;
-        // $cartData['options']['variants_total'] = $variantTotalAmount;
+         $cartData['options']['variants_total'] = $variantTotalAmount;
         $cartData['options']['image'] = $product->thumb_image;
         $cartData['options']['slug'] = $product->slug;
         Cart::add($cartData);
