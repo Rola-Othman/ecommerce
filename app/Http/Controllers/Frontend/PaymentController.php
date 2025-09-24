@@ -168,7 +168,7 @@ class PaymentController extends Controller
         $payableAmount = round($total * $stripeSetting->currency_rate, 2);
 
         Stripe::setApiKey($stripeSetting->secret_key);
-         //!!! WARNNING: you have to remove it on live !!! */
+        //!!! WARNNING: you have to remove it on live !!! */
         \Stripe\ApiRequestor::setHttpClient(new \Stripe\HttpClient\CurlClient([
             CURLOPT_SSL_VERIFYPEER => false,
         ]));
@@ -214,8 +214,8 @@ class PaymentController extends Controller
         $order = Order::create([
             'invocie_id'     => rand(1, 999999),
             'user_id'        => Auth::id(),
-            'sub_total'      => getCartTotal(),
-            'amount'         => getFinalPayableAmount(),
+            'sub_total'      => getCartTotal(), // مجموع سلة المشتريات قبل الخصم مع حساب الكمية بدون مصاريف الشحن
+            'amount'         => getFinalPayableAmount(), // المبلغ النهائي بعد الخصم في حال وجود كوبون مع مصاريف الشحن
             'currency_name'  => $setting->currency_name,
             'currency_icon'  => $setting->currency_icon,
             'product_qty'    => Cart::content()->count(),

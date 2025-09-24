@@ -17,7 +17,6 @@ class CategoryController extends Controller
     /**
      * عرض قائمة التصنيقات
      * show the list of categories
-     * @return View
      */
     public function index(CategoryDataTable $dataTable)
     {
