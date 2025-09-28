@@ -100,6 +100,12 @@
                        </li>
                    </ul>
                </li>
+
+               <li class="{{ setActive(['admin.transaction']) }}"><a class="nav-link"
+                       href="{{ route('admin.transaction') }}"><i class="fas fa-money-bill-alt"></i>
+                       <span>Transactions</span></a>
+               </li>
+
                <li
                    class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.coupons.*', 'admin.shipping-rule.*', 'admin.payment-settings.*']) }}">
                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
@@ -122,13 +128,16 @@
                                href="{{ route('admin.payment-settings.index') }}">Payment settings</a></li>
                    </ul>
                </li>
-               <li class="dropdown {{ setActive(['admin.slider.*']) }}">
+               <li class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting.*']) }}">
                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                            class="fas fa-columns"></i>
                        <span>Manage Website</span></a>
                    <ul class="dropdown-menu">
                        <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
                                href="{{ route('admin.slider.index') }}">Slider</a></li>
+
+                                     <li class="{{ setActive(['admin.home-page-setting.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
                    </ul>
                </li>
 
