@@ -31,11 +31,11 @@
                             @if(count($category->subCategories) > 0)
                                 <ul class="wsus_menu_cat_droapdown">
                                     @foreach ($category->subCategories as $subCategory)
-                                        <li><a >{{$subCategory->name}} <i class="{{count($subCategory->childCategories) > 0 ? 'fas fa-angle-right' : ''}}"></i></a>
+                                        <li><a href="{{route('products.index', ['subcategory' => $subCategory->slug])}}">{{$subCategory->name}} <i class="{{count($subCategory->childCategories) > 0 ? 'fas fa-angle-right' : ''}}"></i></a>
                                             @if(count($subCategory->childCategories) > 0)
                                             <ul class="wsus__sub_category">
                                                 @foreach ($subCategory->childCategories as $childCategory)
-                                                    <li><a>{{$childCategory->name}}</a> </li>
+                                                    <li><a href="{{route('products.index', ['childcategory' => $childCategory->slug])}}">{{$childCategory->name}}</a> </li>
                                                 @endforeach
                                             </ul>
                                             @endif
@@ -168,10 +168,10 @@
 
             <li><a href="compare.html"><i class="far fa-random"></i> </i><span>3</span></a></li>
         </ul>
-        <form>
-            <input type="text" placeholder="Search">
-            <button type="submit"><i class="far fa-search"></i></button>
-        </form>
+  <form action="{{route('products.index')}}">
+        <input type="text" placeholder="Search..." name="search" value="{{request()->search}}">
+        <button type="submit"><i class="far fa-search"></i></button>
+    </form>
 
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">

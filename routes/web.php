@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale.index');
-/** Product detail route */
+/** Product route */
+Route::get('products', [FrontentProductController::class, 'productsIndex'])->name('products.index');
 Route::get('/product-detail/{slug}', [FrontentProductController::class, 'showProduct'])->name('product-detail');
+Route::get('change-product-list-view', [FrontentProductController::class, 'chageListView'])->name('change-product-list-view');
+
 /** Cart routes */
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
 Route::get('/cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
@@ -64,4 +67,5 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   /** Order Routes */
   Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
   Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+  /** Product route */
 });

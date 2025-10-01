@@ -2,6 +2,7 @@
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 /** Set sidebar items active */
 function setActive(array $routes)
@@ -126,4 +127,12 @@ function getShppingFee(){
 /** get payable amount */
 function getFinalPayableAmount(){
     return  getMainCartTotal() + getShppingFee();
+}
+
+
+/** lemit text */
+
+function limitText($text, $limit = 20)
+{
+    return Str::limit($text, $limit);
 }
