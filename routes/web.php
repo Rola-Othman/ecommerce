@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserProfileControllrt;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Frontend\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -32,6 +33,8 @@ Route::post('cart/remove-sidebar-product', [CartController::class, 'removeSideba
 Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-product-total');
 Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
+/** add product in wishlist */
+Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
 
 
 Route::middleware('auth')->group(function () {
@@ -67,5 +70,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   /** Order Routes */
   Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
   Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
-  /** Product route */
+  /** Wishlist routes */
+  Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+  Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destory'])->name('wishlist.destory');
 });

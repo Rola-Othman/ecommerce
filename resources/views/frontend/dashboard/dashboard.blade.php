@@ -30,7 +30,7 @@
                   </a>
                 </div>
                 <div class="col-xl-2 col-6 col-md-4">
-                  <a class="wsus__dashboard_item blue" href="dsahboard_wishlist.html">
+                 <a class="wsus__dashboard_item purple" href="{{route('user.wishlist.index')}}">
                     <i class="far fa-heart"></i>
                     <p>wishlist</p>
                   </a>
