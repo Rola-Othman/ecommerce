@@ -174,6 +174,9 @@
                        <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
                    </ul>
                </li> --}}
+               <li><a class="nav-link {{ setActive(['admin.subscribers.*']) }}"
+                       href="{{ route('admin.subscribers.index') }}"><i class="fas fa-user"></i>
+                       <span>Subscribers</span></a></li>
                <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
                        <span>Settings</span></a></li>
            </ul>

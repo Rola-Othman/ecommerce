@@ -66,13 +66,14 @@
                     <h3>Subscribe To Our Newsletter</h3>
                     <p>Get all the latest information on Events, Sales and Offers.
                         Get all the latest information on Events.</p>
-                    <form>
-                        <input type="text" placeholder="Search...">
-                        <button type="submit" class="common_btn">subscribe</button>
+                    <form action="" method="POST" id="newsletter">
+                        @csrf
+                        <input type="text" placeholder="Email" name="email" class="newsletter_email">
+                        <button type="submit" class="common_btn subscribe_btn">subscribe</button>
                     </form>
                     <div class="footer_payment">
                         <p>We're using safe payment for :</p>
-                        <img src="images/credit2.png" alt="card" class="img-fluid">
+                        <img src="{{asset('frontend/images/credit2.png')}}" alt="card" class="img-fluid">
                     </div>
                 </div>
             </div>

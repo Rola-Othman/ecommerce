@@ -28,6 +28,7 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -94,6 +95,8 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   /** setting routes */
   Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
   Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
+  Route::put('email-setting-update', [SettingController::class, 'emailConfigSettingUpdate'])->name('email-setting-update');
+
   /** Coupon routes */
   Route::resource('coupons', CouponController::class);
   Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');
@@ -135,4 +138,9 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   Route::put('footer-grid-three/change-status', [FooterGridThreeController::class, 'changeStatus'])->name('footer-grid-three.change-status');
   Route::put('footer-grid-three/change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');
   Route::resource('footer-grid-three', FooterGridThreeController::class);
+
+  // /** Subscribers route */
+  Route::get('subscribers', [SubscribersController::class, 'index'])->name('subscribers.index');
+  Route::delete('subscribers/{id}', [SubscribersController::class, 'destory'])->name('subscribers.destory');
+  Route::post('subscribers-send-mail', [SubscribersController::class, 'sendMail'])->name('subscribers-send-mail');
 });
