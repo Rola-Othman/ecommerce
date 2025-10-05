@@ -36,11 +36,11 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="wsus__pro_page_bammer">
-                        {{-- @if ($productpage_banner_section->banner_one->status == 1)
+                        @if ($productpage_banner_section->banner_one->status == 1)
                         <a href="{{$productpage_banner_section->banner_one->banner_url}}">
                             <img class="img-gluid" src="{{asset($productpage_banner_section->banner_one->banner_image)}}" alt="">
                         </a>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-4">

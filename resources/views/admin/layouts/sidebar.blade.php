@@ -174,6 +174,10 @@
                        <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
                    </ul>
                </li> --}}
+               <li><a class="nav-link {{ setActive(['admin.Advertisements.*']) }}"
+                       href="{{ route('admin.advertisement.index') }}"><i class="fas fa-user"></i>
+                       <span>Advertisements</span></a></li>
+
                <li><a class="nav-link {{ setActive(['admin.subscribers.*']) }}"
                        href="{{ route('admin.subscribers.index') }}"><i class="fas fa-user"></i>
                        <span>Subscribers</span></a></li>
