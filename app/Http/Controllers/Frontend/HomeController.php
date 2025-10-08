@@ -67,17 +67,21 @@ class HomeController extends Controller
     {
         $typeBaseProducts = [];
 
-        $typeBaseProducts['new_arrival'] = Proudct::with(['variants', 'category', 'productImageGalleries'])
-            ->where(['product_type' => 'new_arrival', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+        $typeBaseProducts['new_arrival'] = Proudct::withAvg('reviews', 'rating')->withCount('reviews')
+        ->with(['variants', 'category', 'productImageGalleries'])
+        ->where(['product_type' => 'new_arrival', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
 
-        $typeBaseProducts['featured_product'] = Proudct::with(['variants', 'category', 'productImageGalleries'])
-            ->where(['product_type' => 'featured_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+        $typeBaseProducts['featured_product'] = Proudct::withAvg('reviews', 'rating')->withCount('reviews')
+        ->with(['variants', 'category', 'productImageGalleries'])
+        ->where(['product_type' => 'featured_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
 
-        $typeBaseProducts['top_product'] = Proudct::with(['variants', 'category', 'productImageGalleries'])
-            ->where(['product_type' => 'top_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+        $typeBaseProducts['top_product'] = Proudct::withAvg('reviews', 'rating')->withCount('reviews')
+        ->with(['variants', 'category', 'productImageGalleries'])
+        ->where(['product_type' => 'top_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
 
-        $typeBaseProducts['best_product'] = Proudct::with(['variants', 'category', 'productImageGalleries'])
-            ->where(['product_type' => 'best_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+        $typeBaseProducts['best_product'] = Proudct::withAvg('reviews', 'rating')->withCount('reviews')
+        ->with(['variants', 'category', 'productImageGalleries'])
+        ->where(['product_type' => 'best_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
 
         return $typeBaseProducts;
     }

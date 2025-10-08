@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                            BREADCRUMB START
-                        ==============================-->
+                                BREADCRUMB START
+                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                            BREADCRUMB END
-                        ==============================-->
+                                BREADCRUMB END
+                            ==============================-->
 
 
     <!--============================
-                            DAILY DEALS DETAILS START
-                        ==============================-->
+                                DAILY DEALS DETAILS START
+                            ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
@@ -73,7 +73,12 @@
 
                 <div class="row">
                     @php
-                        $products = \App\Models\Proudct::whereIn('id', $flashSaleItems)->get();
+                        // $products = \App\Models\Proudct::whereIn('id', $flashSaleItems)->get();
+                        $products = \App\Models\Proudct::withAvg('reviews', 'rating')
+                            ->withCount('reviews')
+                            ->with(['variants', 'category', 'productImageGalleries'])
+                            ->whereIn('id', $flashSaleItems)
+                            ->get();
                     @endphp
                     @foreach ($products as $product)
                         <div class="col-xl-3 col-sm-6 col-lg-4">
@@ -96,19 +101,25 @@
                                     <li><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal-{{ $product->id }}"><i
                                                 class="far fa-eye"></i></a></li>
-                                    <li><a href="#" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
+                                    <li><a href="#" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                                class="far fa-heart"></i></a></li>
                                     <li><a href="#"><i class="far fa-random"></i></a>
                                 </ul>
                                 <div class="wsus__product_details">
                                     <a class="wsus__category" href="#">{{ $product->category->name }} </a>
                                     <p class="wsus__pro_rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>(133 review)</span>
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $product->reviews_avg_rating)
+                                                <i class="fas fa-star"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+
+                                        <span>({{ $product->reviews_count }} review)</span>
                                     </p>
+
+
                                     <a class="wsus__pro_name"
                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                                     {{-- <p class="wsus__price">$159 <del>${{ $product->price }}</del></p> --}}
@@ -119,24 +130,24 @@
                                     @else
                                         <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
                                     @endif
-                                     {{-- لاضافة المنتج الى السلة تم وضع هذا الفورم واخفائه ، عشان لما يجي اليوزر يضيف للسلة يضيف له الفارينتز الديفلت --}}
-                            <form class="shopping-cart-form">
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                @foreach ($product->variants as $variant)
-                                    <select class="d-none" name="variants_items[]">
-                                        <option>default select</option>
-                                        @foreach ($variant->productVariantItems as $variantItem)
-                                            <option value="{{ $variantItem->id }}"
-                                                {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
-                                                {{ $variantItem->name }}
-                                                ({{ $settings->currency_icon }}{{ $variantItem->price }})
-                                            </option>
+                                    {{-- لاضافة المنتج الى السلة تم وضع هذا الفورم واخفائه ، عشان لما يجي اليوزر يضيف للسلة يضيف له الفارينتز الديفلت --}}
+                                    <form class="shopping-cart-form">
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        @foreach ($product->variants as $variant)
+                                            <select class="d-none" name="variants_items[]">
+                                                <option>default select</option>
+                                                @foreach ($variant->productVariantItems as $variantItem)
+                                                    <option value="{{ $variantItem->id }}"
+                                                        {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
+                                                        {{ $variantItem->name }}
+                                                        ({{ $settings->currency_icon }}{{ $variantItem->price }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         @endforeach
-                                    </select>
-                                @endforeach
-                                <input name='qty' type="hidden" min="1" max="100" value="1" />
-                                <button class="add_cart" type="submit">add to cart</button>
-                            </form>
+                                        <input name='qty' type="hidden" min="1" max="100" value="1" />
+                                        <button class="add_cart" type="submit">add to cart</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -151,11 +162,11 @@
         </div>
     </section>
     <!--============================
-                            DAILY DEALS DETAILS END
-                        ==============================-->
+                                DAILY DEALS DETAILS END
+                            ==============================-->
     <!--==========================
-              PRODUCT MODAL VIEW START
-            ===========================-->
+                  PRODUCT MODAL VIEW START
+                ===========================-->
     @foreach ($products as $product)
         <section class="product_popup_modal">
             <div class="modal fade" id="exampleModal-{{ $product->id }}" tabindex="-1" aria-hidden="true">
@@ -213,14 +224,17 @@
                                         @else
                                             <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
                                         @endif
-                                        <p class="review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
-                                        </p>
+                                        <p class="wsus__pro_rating">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $product->reviews_avg_rating)
+                                        <i class="fas fa-star"></i>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
+
+                                <span>({{ $product->reviews_count }} review)</span>
+                            </p>
                                         <p class="description">{!! $product->short_description !!}</p>
 
                                         <form class="shopping-cart-form">
@@ -260,7 +274,9 @@
                                             <ul class="wsus__button_area">
                                                 <li><button type="submit" class="add_cart">add to cart</button></li>
                                                 <li><a class="buy_now" href="#">buy now</a></li>
-                                                <li><a href="#" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
+                                                <li><a href="#" class="add_to_wishlist"
+                                                        data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
+                                                </li>
                                                 <li><a href="#"><i class="far fa-random"></i></a></li>
                                             </ul>
 
@@ -278,8 +294,8 @@
         </section>
     @endforeach
     <!--==========================
-              PRODUCT MODAL VIEW END
-            ===========================-->
+                  PRODUCT MODAL VIEW END
+                ===========================-->
 @endsection
 
 @push('scripts')

@@ -2,26 +2,40 @@
     $categoryProductSliderSectionTwo = json_decode($categoryProductSliderSectionTwo->value);
     $lastKey = [];
 
-    foreach($categoryProductSliderSectionTwo as $key => $category){
-        if($category === null ){
+    foreach ($categoryProductSliderSectionTwo as $key => $category) {
+        if ($category === null) {
             break;
         }
         $lastKey = [$key => $category];
     }
 
-    if(array_keys($lastKey)[0] === 'category'){
+    if (array_keys($lastKey)[0] === 'category') {
         $category = \App\Models\Category::find($lastKey['category']);
-        $products = \App\Models\Proudct::with(['variants', 'category', 'productImageGalleries'])
-        ->where('category_id', $category->id)->orderBy('id', 'DESC')->take(12)->get();
-    }elseif(array_keys($lastKey)[0] === 'sub_category'){
+        $products = \App\Models\Proudct::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['variants', 'category', 'productImageGalleries'])
+            ->where('category_id', $category->id)
+            ->orderBy('id', 'DESC')
+            ->take(12)
+            ->get();
+    } elseif (array_keys($lastKey)[0] === 'sub_category') {
         $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-        $products = \App\Models\Proudct::with(['variants', 'category', 'productImageGalleries'])
-        ->where('sub_category_id', $category->id)->orderBy('id', 'DESC')->take(12)->get();
-
-    }else {
+        $products = \App\Models\Proudct::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['variants', 'category', 'productImageGalleries'])
+            ->where('sub_category_id', $category->id)
+            ->orderBy('id', 'DESC')
+            ->take(12)
+            ->get();
+    } else {
         $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-        $products = \App\Models\Proudct::with(['variants', 'category', 'productImageGalleries'])
-        ->where('child_category_id', $category->id)->orderBy('id', 'DESC')->take(12)->get();
+        $products = \App\Models\Proudct::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['variants', 'category', 'productImageGalleries'])
+            ->where('child_category_id', $category->id)
+            ->orderBy('id', 'DESC')
+            ->take(12)
+            ->get();
     }
 @endphp
 <section id="wsus__electronic">
@@ -29,14 +43,15 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="wsus__section_header">
-                    <h3>{{$category->name}}</h3>
-                    <a class="see_btn" href="{{route('products.index', ['childcategory' => $category->slug])}}">see more <i class="fas fa-caret-right"></i></a>
+                    <h3>{{ $category->name }}</h3>
+                    <a class="see_btn" href="{{ route('products.index', ['childcategory' => $category->slug]) }}">see more
+                        <i class="fas fa-caret-right"></i></a>
                 </div>
             </div>
         </div>
         <div class="row flash_sell_slider">
             @foreach ($products as $product)
-                 <div class="col-xl-3 col-sm-6 col-lg-4">
+                <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">
                         <span class="wsus__new">{{ productType($product->product_type) }}</span>
                         @if (checkDiscount($product))
@@ -57,18 +72,21 @@
                                     data-bs-target="#exampleModal-{{ $product->id }}"><i class="far fa-eye"></i></a>
                             </li>
 
-                            <li><a href="#" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
+                            <li><a href="#" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                        class="far fa-heart"></i></a></li>
                             <li><a href="#"><i class="far fa-random"></i></a>
                         </ul>
                         <div class="wsus__product_details">
                             <a class="wsus__category" href="#">{{ $product->category->name }} </a>
                             <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(133 review)</span>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $product->reviews_avg_rating)
+                                        <i class="fas fa-star"></i>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
+                                <span>({{ $product->reviews_count }} review)</span>
                             </p>
                             <a class="wsus__pro_name"
                                 href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
@@ -105,4 +123,3 @@
         </div>
     </div>
 </section>
-

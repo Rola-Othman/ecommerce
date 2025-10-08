@@ -16,22 +16,24 @@
                         }
                         $lastKey = [$key => $category];
                     }
-
-                    if (array_keys($lastKey)[0] === 'category') {
+if (array_keys($lastKey)[0] === 'category') {
                         $category = \App\Models\Category::find($lastKey['category']);
-                        $products = \App\Models\Proudct::where('category_id', $category->id)
+                        $products = \App\Models\Proudct::withAvg('reviews', 'rating')->withCount('reviews')
+                        ->where('category_id', $category->id)
                             ->orderBy('id', 'DESC')
                             ->take(6)
                             ->get();
                     } elseif (array_keys($lastKey)[0] === 'sub_category') {
                         $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                        $products = \App\Models\Proudct::where('sub_category_id', $category->id)
+                        $products = \App\Models\Proudct::withAvg('reviews', 'rating')->withCount('reviews')
+                        ->where('sub_category_id', $category->id)
                             ->orderBy('id', 'DESC')
                             ->take(6)
                             ->get();
                     } else {
                         $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-                        $products = \App\Models\Proudct::where('child_category_id', $category->id)
+                        $products = \App\Models\Proudct::withAvg('reviews', 'rating')->withCount('reviews')
+                        ->where('child_category_id', $category->id)
                             ->orderBy('id', 'DESC')
                             ->take(6)
                             ->get();
@@ -54,16 +56,18 @@
                                     <h5>{!!limitText($item->name, )!!}</h5>
                                     <p class="wsus__rating">
 
+                                       <p class="wsus__rating">
+
                                         @for ($i = 1; $i <= 5; $i++)
-                                         <i class="fas fa-star"></i>
-                                            {{-- @if ($i <= $item->reviews_avg_rating)
+                                            @if ($i <= $item->reviews_avg_rating)
                                             <i class="fas fa-star"></i>
                                             @else
                                             <i class="far fa-star"></i>
-                                            @endif --}}
+                                            @endif
                                         @endfor
 
-                                        <span>(55 review)</span>
+                                        <span>({{$item->reviews_count}} review)</span>
+                                    </p>
                                     </p>
                                     @if (checkDiscount($item))
                                         <p class="wsus__tk">{{$settings->currency_icon}}{{$item->offer_price}} <del>{{$settings->currency_icon}}{{$item->price}}</del></p>
