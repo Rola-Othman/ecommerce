@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserProfileControllrt;
+use App\Http\Controllers\Frontend\UserVendorReqeustController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -37,9 +38,12 @@ Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
 /** add product in wishlist */
 Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
-
+/** NewsLetter */
 Route::post('newsletter-request', [NewsletterController::class, 'newsLetterRequset'])->name('newsletter-request');
 Route::get('newsletter-verify/{token}', [NewsletterController::class, 'newsLetterEmailVarify'])->name('newsletter-verify');
+/** vendor page routes */
+Route::get('vendorIndex', [HomeController::class, 'vendorPage'])->name('vendor.index');
+Route::get('vendor-product/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
 
 Route::middleware('auth')->group(function () {
@@ -81,4 +85,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   /** product review routes */
   Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
   Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+
+  /** Vendor request route */
+  Route::get('vendor-request', [UserVendorReqeustController::class, 'index'])->name('vendor-request.index');
+  Route::post('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
 });

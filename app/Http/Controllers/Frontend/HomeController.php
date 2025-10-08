@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
 use App\Models\HomePageSetting;
 use App\Models\Proudct;
 use App\Models\Slider;
+use App\Models\Vendor;
 use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
@@ -63,26 +65,61 @@ class HomeController extends Controller
         ));
     }
 
+    /**
+     * Get type base product
+     * جلب المنتجات بناء على النوع
+     * @return array
+     */
     public function getTypeBaseProduct()
     {
         $typeBaseProducts = [];
 
         $typeBaseProducts['new_arrival'] = Proudct::withAvg('reviews', 'rating')->withCount('reviews')
-        ->with(['variants', 'category', 'productImageGalleries'])
-        ->where(['product_type' => 'new_arrival', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+            ->with(['variants', 'category', 'productImageGalleries'])
+            ->where(['product_type' => 'new_arrival', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
 
         $typeBaseProducts['featured_product'] = Proudct::withAvg('reviews', 'rating')->withCount('reviews')
-        ->with(['variants', 'category', 'productImageGalleries'])
-        ->where(['product_type' => 'featured_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+            ->with(['variants', 'category', 'productImageGalleries'])
+            ->where(['product_type' => 'featured_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
 
         $typeBaseProducts['top_product'] = Proudct::withAvg('reviews', 'rating')->withCount('reviews')
-        ->with(['variants', 'category', 'productImageGalleries'])
-        ->where(['product_type' => 'top_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+            ->with(['variants', 'category', 'productImageGalleries'])
+            ->where(['product_type' => 'top_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
 
         $typeBaseProducts['best_product'] = Proudct::withAvg('reviews', 'rating')->withCount('reviews')
-        ->with(['variants', 'category', 'productImageGalleries'])
-        ->where(['product_type' => 'best_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
+            ->with(['variants', 'category', 'productImageGalleries'])
+            ->where(['product_type' => 'best_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
 
         return $typeBaseProducts;
+    }
+
+    /**
+     ** Display the vendor page.
+     ** عرض صفحة البائعين
+     * @return View
+     */
+    public function vendorPage()
+    {
+        $vendors = Vendor::where('status', 1)->paginate(20);
+        return view('frontend.pages.vendor', compact('vendors'));
+    }
+
+    
+    /**
+     ** Display the vendor products page.
+     ** عرض صفحة منتجات البائعين
+     * @param string $id
+     * @return View
+     */
+    public function vendorProductsPage(string $id)
+    {
+
+        $products = Proudct::where(['status' => 1, 'is_approved' => 1, 'vendor_id' => $id])->orderBy('id', 'DESC')->paginate(12);
+
+        $categories = Category::where(['status' => 1])->get();
+        $brands = Brand::where(['status' => 1])->get();
+        $vendor = Vendor::findOrFail($id);
+
+        return view('frontend.pages.vendor-product', compact('products', 'categories', 'brands', 'vendor'));
     }
 }

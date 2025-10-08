@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
+use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\FooterGridThreeController;
 use App\Http\Controllers\Backend\FooterGridTwoController;
@@ -32,6 +33,9 @@ use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\VendorConditionController;
+use App\Http\Controllers\Backend\VendorListController;
+use App\Http\Controllers\Backend\VendorRequestController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -157,4 +161,19 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   /** reviews routes */
   Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
   Route::put('reviews/change-status', [AdminReviewController::class, 'changeStatus'])->name('reviews.change-status');
+  /**vendor condition route */
+  Route::get('vendor-condition', [VendorConditionController::class, 'index'])->name('vendor-condition.index');
+  Route::put('vendor-condition/update', [VendorConditionController::class, 'update'])->name('vendor-condition.update');
+
+  Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-list.index');
+  Route::put('vendor-list/status-change', [VendorListController::class, 'changeStatus'])->name('vendor-list.status-change');
+
+  /** Vendor request routes */
+  Route::get('vendor-requests', [VendorRequestController::class, 'index'])->name('vendor-requests.index');
+  Route::get('vendor-requests/{id}/show', [VendorRequestController::class, 'show'])->name('vendor-requests.show');
+  Route::put('vendor-requests/{id}/change-status', [VendorRequestController::class, 'changeStatus'])->name('vendor-requests.change-status');
+
+  /** coustomer list routes */
+  Route::get('customer', [CustomerListController::class, 'index'])->name('customer.index');
+  Route::put('customer/status-change', [CustomerListController::class, 'changeStatus'])->name('customer.status-change');
 });
