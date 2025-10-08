@@ -10,9 +10,9 @@ class GeneralSetting extends Model
         'site_name',
         'layout',
         'contact_email',
-        // 'contact_phone',
-        // 'contact_address',
-        // 'map',
+        'contact_phone',
+        'contact_address',
+        'map',
         'currency_name',
         'time_zone',
         'currency_icon'

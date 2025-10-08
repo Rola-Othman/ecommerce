@@ -61,7 +61,8 @@
                             <li><a class="{{ setActive(['vendor.index']) }}"
                                     href="{{ route('vendor.index') }}">vendors</a></li>
                             <li><a class="{{ setActive(['about']) }}" href="{{ route('about') }}">About</a></li>
-                            <li><a class="{{ setActive(['terms-and-conditions']) }}" href="{{ route('terms-and-conditions') }}">Terms
+                            <li><a class="{{ setActive(['terms-and-conditions']) }}"
+                                    href="{{ route('terms-and-conditions') }}">Terms
                                     and conditions</a></li>
 
                             <li><a href="product_grid_view.html">shop <i class="fas fa-caret-down"></i></a>
@@ -154,7 +155,7 @@
                             <li><a href="daily_deals.html">daily deals</a></li>
                         </ul>
                         <ul class="wsus__menu_item wsus__menu_item_right">
-                            <li><a href="contact.html">contact</a></li>
+                            <li><a href="{{ route('contact') }}">contact</a></li>
                             <li><a href="dsahboard.html">my account</a></li>
                             <li><a href="{{ route('login') }}">login</a></li>
                         </ul>
@@ -241,12 +242,14 @@
                 <div class="wsus__mobile_menu_main_menu">
                     <div class="accordion accordion-flush" id="accordionFlushExample2">
                         <ul>
-                            <li><a href="{{ route('home') }}">home</a></li>
+                            <li><a href="{{ route('home') }}">Home</a></li>
 
-                            <li><a href="{{ route('vendor.index') }}">vendor</a></li>
+                            <li><a href="{{ route('vendor.index') }}">Vendors</a></li>
 
-                            <li><a href="{{ route('about') }}">about us</a></li>
+                            <li><a href="{{ route('about') }}">About us</a></li>
+
                             <li><a href="{{ route('terms-and-conditions') }}">Terms and conditions</a></li>
+                    
                             <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThree" aria-expanded="false"
                                     aria-controls="flush-collapseThree">shop</a>
