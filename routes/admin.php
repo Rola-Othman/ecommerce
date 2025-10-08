@@ -2,6 +2,7 @@
 
 /** Admin Routes */
 
+use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
@@ -176,4 +177,8 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   /** coustomer list routes */
   Route::get('customer', [CustomerListController::class, 'index'])->name('customer.index');
   Route::put('customer/status-change', [CustomerListController::class, 'changeStatus'])->name('customer.status-change');
+
+  /** about routes */
+  Route::get('about', [AboutController::class, 'index'])->name('about.index');
+  Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
 });
