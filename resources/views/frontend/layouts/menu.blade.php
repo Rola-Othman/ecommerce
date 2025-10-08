@@ -57,10 +57,12 @@
                         </ul>
 
                         <ul class="wsus__menu_item">
-                            <li><a class="active" href="{{ url('/') }}">home</a></li>
+                            <li><a class="active" href="{{ url('/') }}">Home</a></li>
                             <li><a class="{{ setActive(['vendor.index']) }}"
                                     href="{{ route('vendor.index') }}">vendors</a></li>
-                            <li><a class="{{ setActive(['about']) }}" href="{{ route('about') }}">about</a></li>
+                            <li><a class="{{ setActive(['about']) }}" href="{{ route('about') }}">About</a></li>
+                            <li><a class="{{ setActive(['terms-and-conditions']) }}" href="{{ route('terms-and-conditions') }}">Terms
+                                    and conditions</a></li>
 
                             <li><a href="product_grid_view.html">shop <i class="fas fa-caret-down"></i></a>
                                 <div class="wsus__mega_menu">
@@ -244,6 +246,7 @@
                             <li><a href="{{ route('vendor.index') }}">vendor</a></li>
 
                             <li><a href="{{ route('about') }}">about us</a></li>
+                            <li><a href="{{ route('terms-and-conditions') }}">Terms and conditions</a></li>
                             <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThree" aria-expanded="false"
                                     aria-controls="flush-collapseThree">shop</a>
