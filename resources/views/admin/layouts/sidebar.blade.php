@@ -187,7 +187,8 @@
 
                        <li class="{{ setActive(['admin.vendor-requests.index']) }}"><a class="nav-link"
                                href="{{ route('admin.vendor-requests.index') }}">Pending vendors</a></li>
-
+               <li class="{{ setActive(['admin.admin-list.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.admin-list.index') }}">Admin Lists</a></li>
                                
                     <li class="{{ setActive(['admin.manage-user.index']) }}"><a class="nav-link"
                             href="{{ route('admin.manage-user.index') }}">Manage user</a></li>
