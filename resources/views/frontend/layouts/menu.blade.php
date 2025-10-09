@@ -60,7 +60,8 @@
                             <li><a class="active" href="{{ url('/') }}">Home</a></li>
                             <li><a class="{{ setActive(['vendor.index']) }}"
                                     href="{{ route('vendor.index') }}">vendors</a></li>
-                                    
+                            <li><a class="{{ setActive(['blog']) }}" href="{{ route('blog') }}">blog</a></li>
+
                             <li><a class="{{ setActive(['about']) }}" href="{{ route('about') }}">About</a></li>
                             <li><a class="{{ setActive(['terms-and-conditions']) }}"
                                     href="{{ route('terms-and-conditions') }}">Terms
@@ -155,7 +156,7 @@
                             <li><a href="daily_deals.html">daily deals</a></li>
                         </ul>
                         <ul class="wsus__menu_item wsus__menu_item_right">
-                            <li><a href="{{route('product-traking.index')}}">track order</a></li>
+                            <li><a href="{{ route('product-traking.index') }}">track order</a></li>
                             <li><a href="{{ route('contact') }}">contact</a></li>
                             <li><a href="dsahboard.html">my account</a></li>
                             <li><a href="{{ route('login') }}">login</a></li>
@@ -249,9 +250,10 @@
 
                             <li><a href="{{ route('about') }}">About us</a></li>
 
+                            <li><a href="{{ route('blog') }}">blog</a></li>
                             <li><a href="{{ route('terms-and-conditions') }}">Terms and conditions</a></li>
-                                  <li><a href="{{route('product-traking.index')}}">track order</a></li>
-                    
+                            <li><a href="{{ route('product-traking.index') }}">track order</a></li>
+
                             <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseThree" aria-expanded="false"
                                     aria-controls="flush-collapseThree">shop</a>
