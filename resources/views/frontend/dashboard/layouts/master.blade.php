@@ -11,7 +11,7 @@
     </title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="icon" type="image/png" href="{{ $logoSetting->favicon }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/bootstrap.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('frotend/css/css/select2.min.css') }}"> --}}
