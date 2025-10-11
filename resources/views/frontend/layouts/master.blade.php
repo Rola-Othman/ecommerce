@@ -30,7 +30,9 @@
 
     <link rel="stylesheet" href="{{ asset('frotend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/responsive.css') }}">
-    <!-- <link rel="stylesheet" href="css/rtl.css"> -->
+    @if ($settings->layout === 'RTL')
+        <link rel="stylesheet" href="{{ asset('frotend/css/rtl.css') }}">
+    @endif
 </head>
 
 <body>

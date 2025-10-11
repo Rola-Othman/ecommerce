@@ -34,7 +34,17 @@
 
     <link rel="stylesheet" href="{{ asset('frotend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frotend/css/responsive.css') }}">
-    <!-- <link rel="stylesheet" href="css/rtl.css"> -->
+  @if ($settings->layout === 'RTL')
+        <link rel="stylesheet" href="{{ asset('frotend/css/rtl.css') }}">
+    @endif
+    <script>
+    const USER = {
+        id: "{{ auth()->user()->id }}",
+        name: "{{ auth()->user()->nmae }}",
+        image: "{{ asset(auth()->user()->image) }}"
+    }
+  </script>
+    @vite(['resources/js/app.js', 'resources/js/frontend.js'])
 </head>
 
 <body>
@@ -45,8 +55,8 @@
   ==============================-->
     <div class="wsus__dashboard_menu">
         <div class="wsusd__dashboard_user">
-            <img src="images/dashboard_user.jpg" alt="img" class="img-fluid">
-            <p>anik roy</p>
+             <img src="{{asset(auth()->user()->image)}}" alt="img" class="img-fluid">
+      <p>{{auth()->user()->name}}</p>
         </div>
     </div>
     <!--=============================
