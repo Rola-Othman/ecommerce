@@ -109,6 +109,7 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
   Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
   Route::put('email-setting-update', [SettingController::class, 'emailConfigSettingUpdate'])->name('email-setting-update');
+  Route::put('logo-setting-update', [SettingController::class, 'logoSettingUpdate'])->name('logo-setting-update');
 
   /** Coupon routes */
   Route::resource('coupons', CouponController::class);
@@ -198,14 +199,13 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   Route::get('admin-list', [AdminListController::class, 'index'])->name('admin-list.index');
   Route::put('admin-list/status-change', [AdminListController::class, 'changeStatus'])->name('admin-list.status-change');
   Route::delete('admin-list/{id}', [AdminListController::class, 'destory'])->name('admin-list.destory');
-  
-/** Blog routes */
-Route::put('blog-category/status-change', [BlogCategoryController::class, 'changeStatus'])->name('blog-category.status-change');
-Route::resource('blog-category', BlogCategoryController::class);
 
-Route::put('blog/status-change', [BlogController::class, 'changeStatus'])->name('blog.status-change');
-Route::resource('blog', BlogController::class);
-Route::get('blog-comments', [BlogCommentController::class, 'index'])->name('blog-comments.index');
-Route::delete('blog-comments/{id}/destory', [BlogCommentController::class, 'destory'])->name('blog-comments.destory');
+  /** Blog routes */
+  Route::put('blog-category/status-change', [BlogCategoryController::class, 'changeStatus'])->name('blog-category.status-change');
+  Route::resource('blog-category', BlogCategoryController::class);
 
+  Route::put('blog/status-change', [BlogController::class, 'changeStatus'])->name('blog.status-change');
+  Route::resource('blog', BlogController::class);
+  Route::get('blog-comments', [BlogCommentController::class, 'index'])->name('blog-comments.index');
+  Route::delete('blog-comments/{id}/destory', [BlogCommentController::class, 'destory'])->name('blog-comments.destory');
 });

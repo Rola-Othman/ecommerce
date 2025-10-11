@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
+use App\Models\LogoSetting;
+use App\Traits\FileUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    use FileUpload;
     /**
      ** عرض صفحة الاعدادت
      ** Display settings page
@@ -18,8 +21,9 @@ class SettingController extends Controller
     function index(): View
     {
         $generalSettings = GeneralSetting::first();
-         $emailSettings = EmailConfiguration::first();
-        return view('admin.setting.index', compact('generalSettings', 'emailSettings'));
+        $emailSettings = EmailConfiguration::first();
+        $logoSetting = LogoSetting::first();
+        return view('admin.setting.index', compact('generalSettings', 'emailSettings', 'logoSetting'));
     }
 
     /**
@@ -86,6 +90,41 @@ class SettingController extends Controller
         );
 
         flash()->success('Updated successfully.');
+        return redirect()->back();
+    }
+
+    public function logoSettingUpdate(Request $request)
+    {
+        $request->validate([
+            'logo' => ['image', 'max:3000'],
+            'favicon' => ['image', 'max:3000'],
+        ]);
+        $logoPath = '';
+        $favicon = '';
+
+        if ($request->hasFile('logo')) {
+            $logoPath = $this->uploadFile($request->file('logo'));
+            $this->deleteFile($request->old_logo);
+        }
+
+        if ($request->hasFile('favicon')) {
+            $favicon = $this->uploadFile($request->file('favicon'));
+            $this->deleteFile($request->old_favicon);
+        }
+
+        $logoPath = $this->uploadFile($request->file('logo'));
+        $favicon = $this->uploadFile($request->file('favicon'));
+
+        LogoSetting::updateOrCreate(
+            ['id' => 1],
+            [
+                'logo' => (!empty($logoPath)) ? $logoPath : $request->old_logo,
+                'favicon' => (!empty($favicon)) ? $favicon : $request->old_favicon
+            ]
+        );
+
+        flash()->success('Updated successfully.');
+
         return redirect()->back();
     }
 }

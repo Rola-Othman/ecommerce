@@ -20,8 +20,8 @@ class SliderController extends Controller
      */
     public function index(SliderDataTable $dataTable)
     {
-      //  dd($dataTable);
-       return $dataTable->render('admin.slider.index');
+        //  dd($dataTable);
+        return $dataTable->render('admin.slider.index');
     }
 
     /**
@@ -60,10 +60,10 @@ class SliderController extends Controller
         $slider->starting_price = $request->starting_price;
         $slider->btn_url = $request->btn_url;
         $slider->serial = $request->serial;
-        $slider->status = $request->status ? 1:0;
+        $slider->status = $request->status ? 1 : 0;
         $slider->save();
         flash()->success('Created successfully.');
-    return redirect()->route('admin.slider.index');
+        return redirect()->route('admin.slider.index');
     }
 
 
@@ -104,12 +104,12 @@ class SliderController extends Controller
         }
 
         $slider->type = $request->type;
-       $slider->title = $request->title;
-       $slider->starting_price = $request->starting_price;
-       $slider->btn_url = $request->btn_url;
-       $slider->serial = $request->serial;
-       $slider->status = $request->status;
-       $slider->save();
+        $slider->title = $request->title;
+        $slider->starting_price = $request->starting_price;
+        $slider->btn_url = $request->btn_url;
+        $slider->serial = $request->serial;
+        $slider->status = $request->status;
+        $slider->save();
         flash()->success('Updated successfully.');
         return redirect()->route('admin.slider.index');
     }
@@ -119,7 +119,7 @@ class SliderController extends Controller
      * @param string $id
      * @return Response
      */
-    public function destroy(string $id):Response
+    public function destroy(string $id): Response
     {
         $slider = Slider::findOrFail($id);
         $this->deleteFile($slider->banner);
