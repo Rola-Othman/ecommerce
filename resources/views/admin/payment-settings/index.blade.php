@@ -26,16 +26,16 @@
                                                 data-toggle="list" href="#list-home" role="tab">Paypal</a>
                                             <a class="list-group-item list-group-item-action" id="list-stripe-list"
                                                 data-toggle="list" href="#list-stripe" role="tab">Stripe</a>
-                                            <a class="list-group-item list-group-item-action" id="list-messages-list"
-                                                data-toggle="list" href="#list-messages" role="tab">Messages</a>
                                             <a class="list-group-item list-group-item-action" id="list-settings-list"
-                                                data-toggle="list" href="#list-settings" role="tab">Settings</a>
+                                                data-toggle="list" href="#list-settings" role="tab">COD</a>
+
                                         </div>
                                     </div>
                                     <div class="col-10">
                                         <div class="tab-content" id="nav-tabContent">
                                             @include('admin.payment-settings.sections.paypal-setting')
                                             @include('admin.payment-settings.sections.stripe-setting')
+                                            @include('admin.payment-settings.sections.cod-setting')
                                         </div>
                                     </div>
                                 </div>

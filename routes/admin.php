@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\CodSettingController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\FlashSaleController;
@@ -135,7 +136,7 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
   Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
   Route::resource('paypal-setting', PaypalSettingController::class);
   Route::put('stripe-setting/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
-
+  Route::put('cod-setting/{id}', [CodSettingController::class, 'update'])->name('cod-setting.update');
   /** home page setting route */
   Route::get('home-page-setting', [HomePageSettingController::class, 'index'])->name('home-page-setting');
   Route::put('popular-category-section', [HomePageSettingController::class, 'updatePopularCategorySection'])->name('popular-category-section');

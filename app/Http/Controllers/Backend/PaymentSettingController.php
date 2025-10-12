@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CodSetting;
 use App\Models\PaypalSetting;
 use App\Models\StripeSetting;
 use Illuminate\Contracts\View\View;
@@ -15,14 +16,12 @@ class PaymentSettingController extends Controller
      ** عرض صفحة إعدادات الدفع
      * @return View
      */
-    public function index():View
+    public function index(): View
     {
-         $paypalSetting = PaypalSetting::first();
-         $stripeSetting = StripeSetting::first();
-        // $razorpaySetting = RazorpaySetting::first();
-        // $codSetting = CodSetting::first();
-        //, compact('paypalSetting', 'stripeSetting', 'razorpaySetting', 'codSetting')
+        $paypalSetting = PaypalSetting::first();
+        $stripeSetting = StripeSetting::first();
+        $codSetting = CodSetting::first();
 
-        return view('admin.payment-settings.index', compact('paypalSetting', 'stripeSetting'));
+        return view('admin.payment-settings.index', compact('paypalSetting', 'stripeSetting', 'codSetting'));
     }
 }
