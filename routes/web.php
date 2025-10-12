@@ -93,6 +93,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
   /** Stripe routes */
   Route::post('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
+  /** COD routes */
+  Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
   /** Order Routes */
   Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
   Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
@@ -106,6 +108,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   /** Vendor request route */
   Route::get('vendor-request', [UserVendorReqeustController::class, 'index'])->name('vendor-request.index');
   Route::post('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
-      /** blog comment routes */
-    Route::post('blog-comment', [BlogController::class, 'comment'])->name('blog-comment');
+  /** blog comment routes */
+  Route::post('blog-comment', [BlogController::class, 'comment'])->name('blog-comment');
 });

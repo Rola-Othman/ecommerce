@@ -11,9 +11,9 @@
               </div>
               <div class="col-xl-2 col-7 col-md-8 col-lg-2">
                   <div class="wsus_logo_area">
-                      <a class="wsus__header_logo" href="{{url('/')}}">
-                        <img src="{{asset($logoSetting->logo)}}" alt="logo" class="img-fluid w-100">
-                    </a>
+                      <a class="wsus__header_logo" href="{{ url('/') }}">
+                          <img src="{{ asset($logoSetting->logo) }}" alt="logo" class="img-fluid w-100">
+                      </a>
                   </div>
               </div>
               <div class="col-xl-5 col-md-6 col-lg-4 d-none d-lg-block">
@@ -98,7 +98,7 @@
               </h5>
               <div class="wsus__minicart_btn_area">
                   <a class="common_btn" href="{{ route('cart-details') }}">view cart</a>
-                  <a class="common_btn" href="">checkout</a>
+                  <a class="common_btn" href="{{ route('user.checkout') }}">checkout</a>
               </div>
           </div>
       </div>
