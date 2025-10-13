@@ -48,8 +48,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
   //Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-  Route::get('login', [AdminController::class, 'login'])
-    ->name('login'); // عرض صفحة تسجيل الدخول
+  // ! هذه كانت قبل شغالة بهل المكان ولكني نقلتها لمكان آخر ووهو ملف الاوث علشان اذا اليوزر او الفندور مسويين لوجين ويبون يروحون للادمين م يقدرون واذا راحو راح يوجههم لصفحة الداش بورد
+  // Route::get('login', [AdminController::class, 'login'])
+  //   ->name('login'); // عرض صفحة تسجيل الدخول
 
 });
 

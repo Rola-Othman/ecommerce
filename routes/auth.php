@@ -9,11 +9,15 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Backend\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     // Route::get('register', [RegisteredUserController::class, 'create'])
     //     ->name('register');
+    // ! Before this was in admin.php file but I moved it to this file auth.php so if the user or vendor are logged in and they want to go to admin they can't and if they go they will be redirected to the dashboard page
+Route::get('admin/login', [AdminController::class, 'login'])
+    ->name('admin.login'); // عرض صفحة تسجيل الدخول
 
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
 
