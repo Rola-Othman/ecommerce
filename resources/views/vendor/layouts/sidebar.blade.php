@@ -14,8 +14,12 @@
          <li><a href="{{ route('vendor.products.index') }}"><i class="far fa-user"></i>Products </a></li>
          <li><a class="{{ setActive(['vendor.reviews.index']) }}" href="{{ route('vendor.reviews.index') }}"><i
                      class="fas fa-star"></i> Review</a></li>
-         <li><a class="{{setActive(['vendor.shop-profile.index'])}}" href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-user"></i> Shop Profile</a></li>
-         <li><a class="{{setActive(['vendor.profile'])}}" href="{{ route('vendor.profile') }}"><i class="far fa-user"></i> My Profile</a></li>
+         <li><a class="{{ setActive(['vendor.reviews.index']) }}" href="{{ route('vendor.withdraw.index') }}"><i
+                     class="fas fa-star"></i> My Withdraw</a></li>
+         <li><a class="{{ setActive(['vendor.shop-profile.index']) }}"
+                 href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-user"></i> Shop Profile</a></li>
+         <li><a class="{{ setActive(['vendor.profile']) }}" href="{{ route('vendor.profile') }}"><i
+                     class="far fa-user"></i> My Profile</a></li>
          <li>
 
 

@@ -44,6 +44,8 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+use App\Http\Controllers\Backend\WithdrawController;
+use App\Http\Controllers\Backend\WithdrawMehtodController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -133,6 +135,13 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' 
 
   /** Order Transaction route */
   Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
+  
+/** Withdraw method route */
+Route::resource('withdraw-method', WithdrawMehtodController::class);
+Route::get('withdraw', [WithdrawController::class, 'index'])->name('withdraw.index');
+Route::get('withdraw/{id}', [WithdrawController::class, 'show'])->name('withdraw.show');
+Route::put('withdraw/{id}', [WithdrawController::class, 'update'])->name('withdraw.update');
+
   /** Payment settings routes */
   Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
   Route::resource('paypal-setting', PaypalSettingController::class);
