@@ -9,6 +9,7 @@
     <title>
         @yield('title')
     </title>
+     @yield('metas')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <link rel="icon" type="image/png" href="{{ asset($logoSetting->favicon) }}">
