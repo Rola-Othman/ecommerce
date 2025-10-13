@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\BrandDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Proudct;
 use App\Traits\FileUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -112,9 +113,9 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         $brand = Brand::findOrFail($id);
-        // if (Product::where('brand_id', $brand->id)->count() > 0) {
-        //     return response(['status' => 'error', 'message' => 'This brand have products you can\'t delete it.']);
-        // }
+        if (Proudct::where('brand_id', $brand->id)->count() > 0) {
+            return response(['status' => 'error', 'message' => 'This brand have products you can\'t delete it.']);
+        }
         $this->deleteFile($brand->logo);
         $brand->delete();
 

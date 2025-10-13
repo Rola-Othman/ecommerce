@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\OrderProudct;
 use App\Models\ProductImageGallery;
 use App\Models\ProductVariant;
 use App\Models\Proudct;
@@ -186,7 +187,9 @@ class ProudctController extends Controller
     public function destroy(string $id)
     {     
         $product = Proudct::findOrFail($id);
-        
+        if(OrderProudct::where('product_id',$product->id)->count() > 0){
+            return response(['status' => 'error', 'message' => 'This product have orders can\'t delete it.']);
+        }
         /** Delte the main product image */
         $this->deleteFile($product->thumb_image);
 
