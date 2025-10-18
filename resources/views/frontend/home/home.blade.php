@@ -98,9 +98,9 @@
 
 
     <!--============================
-      HOME SERVICES START
+      HOME SERVICES START NOT NEEDED
     ==============================-->
-    {{-- @include('frontend.home.sections.services') --}}
+    @include('frontend.home.sections.services')
     <!--============================
         HOME SERVICES END
     ==============================-->

@@ -6,31 +6,30 @@
               }
           });
           // add product to cart
-          $('.shopping-cart-form').on('submit', function(e) {
-              e.preventDefault();
+        $(document).on('submit', '.shopping-cart-form', function(e) {
+            e.preventDefault();
+            let formData = $(this).serialize();
 
-              let formData = $(this).serialize();
-              console.log(formData);
+            $.ajax({
+                method: 'POST',
+                data: formData,
+                url: "{{ route('add-to-cart') }}",
+                success: function(data) {
+                    if(data.status === 'success'){
+                        getCartCount()
+                        
+                        fetchSidebarCartProuducts()
+                        $('.mini_cart_actions').removeClass('d-none');
+                        toastr.success(data.message);
+                    }else if (data.status === 'error'){
+                        toastr.error(data.message);
+                    }
+                },
+                error: function(data) {
 
-              $.ajax({
-                  method: "POST",
-                  url: "{{ route('add-to-cart') }}",
-                  data: formData,
-                  success: function(data) {
-                      if (data.status === 'success') {
-                          getCartCount()
-                          fetchSidebarCartProuducts()
-                          $('.mini_cart_actions').removeClass('d-none');
-                          toastr.success(data.message);
-                      } else if (data.status === 'error') {
-                          toastr.error(data.message);
-                      }
-                  },
-                  error: function(xhr, status, error) {
-
-                  }
-              });
-          });
+                }
+            })
+        });
 
           /*  get cart count */
           function getCartCount() {
@@ -184,5 +183,27 @@
                     $('.subscribe_btn').text('Subscribe');
                 }
             })
-        })
+        });
+
+          $('.show_product_modal').on('click', function(){
+            let id = $(this).data('id');
+
+            $.ajax({
+                mehtod: 'GET',
+                url: '{{ route("show-product-modal", ":id" ) }}'.replace(":id", id),
+                beforeSend: function(){
+                    $('.product-modal-content').html('<span class="loader"></span>')
+                },
+                success: function(response){
+                    $('.product-modal-content').html(response)
+                },
+                error: function(xhr, status, error){
+
+                },
+                complete: function(){
+
+                }
+            })
+        });
+
   </script>

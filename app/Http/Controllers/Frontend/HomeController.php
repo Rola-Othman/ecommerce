@@ -14,6 +14,8 @@ use App\Models\Proudct;
 use App\Models\Slider;
 use App\Models\Vendor;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Response;
 
 class HomeController extends Controller
 {
@@ -24,9 +26,9 @@ class HomeController extends Controller
      */
     function index(): View
     {
-        $sliders = Slider::where('status', 1)
-            ->orderBy('serial', 'asc')
-            ->get();
+           $sliders = Cache::rememberForever('sliders', function(){
+            return Slider::where('status', 1)->orderBy('serial', 'asc')->get();
+        });
         $flashSaleDate = FlashSale::first();
         $flashSaleItems = FlashSaleItem::where('show_at_home', 1)->where('status', 1)->pluck('product_id')->toArray();
         $popularCategory = HomePageSetting::where('key', 'popular_category_section')->first();
@@ -125,5 +127,14 @@ class HomeController extends Controller
         $vendor = Vendor::findOrFail($id);
 
         return view('frontend.pages.vendor-product', compact('products', 'categories', 'brands', 'vendor'));
+    }
+
+    function ShowProductModal(string $id)
+    {
+        $product = Proudct::findOrFail($id);
+
+        $content = view('frontend.layouts.modal', compact('product'))->render();
+
+        return Response::make($content, 200, ['Content-Type' => 'text/html']);
     }
 }

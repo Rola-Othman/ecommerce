@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class SliderController extends Controller
 {
@@ -62,6 +63,7 @@ class SliderController extends Controller
         $slider->serial = $request->serial;
         $slider->status = $request->status ? 1 : 0;
         $slider->save();
+        Cache::forget('sliders');
         flash()->success('Created successfully.');
         return redirect()->route('admin.slider.index');
     }
@@ -110,6 +112,7 @@ class SliderController extends Controller
         $slider->serial = $request->serial;
         $slider->status = $request->status;
         $slider->save();
+        Cache::forget('sliders');
         flash()->success('Updated successfully.');
         return redirect()->route('admin.slider.index');
     }

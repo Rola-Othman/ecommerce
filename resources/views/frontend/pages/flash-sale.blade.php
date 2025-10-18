@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                BREADCRUMB START
-                            ==============================-->
+                                    BREADCRUMB START
+                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,42 +22,17 @@
         </div>
     </section>
     <!--============================
-                                BREADCRUMB END
-                            ==============================-->
+                                    BREADCRUMB END
+                                ==============================-->
 
 
     <!--============================
-                                DAILY DEALS DETAILS START
-                            ==============================-->
+                                    DAILY DEALS DETAILS START
+                                ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
-                <div class="row">
-                    <div class="col-xl-6 col-md-6">
-                        <div class="wsus__offer_details_banner">
-                            <img src="{{ asset('frotend/images/offer_banner_2.png') }}" alt="offrt img"
-                                class="img-fluid w-100">
-                            <div class="wsus__offer_details_banner_text">
-                                <p>apple watch</p>
-                                <span>up 50% 0ff</span>
-                                <p>for all poduct</p>
-                                <p><b>today only</b></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-md-6">
-                        <div class="wsus__offer_details_banner">
-                            <img src="{{ asset('frotend/images/offer_banner_3.png') }}" alt="offrt img"
-                                class="img-fluid w-100">
-                            <div class="wsus__offer_details_banner_text">
-                                <p>xiaomi power bank</p>
-                                <span>up 37% 0ff</span>
-                                <p>for all poduct</p>
-                                <p><b>today only</b></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              
 
                 <div class="row">
                     <div class="col-xl-12">
@@ -80,77 +55,9 @@
                             ->whereIn('id', $flashSaleItems)
                             ->get();
                     @endphp
+
                     @foreach ($products as $product)
-                        <div class="col-xl-3 col-sm-6 col-lg-4">
-                            <div class="wsus__product_item">
-                                <span class="wsus__new">{{ productType($product->product_type) }}</span>
-                                @if (checkDiscount($product))
-                                    <span
-                                        class="wsus__minus">-{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
-                                @endif
-                                <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
-                                    <img src="{{ asset($product->thumb_image) }}" alt="product"
-                                        class="img-fluid w-100 img_1" />
-                                    <img src="
-            @if (isset($product->productImageGalleries[0]->image)) {{ asset($product->productImageGalleries[0]->image) }}
-            @else
-                {{ asset($product->thumb_image) }} @endif"
-                                        alt="product" class="img-fluid w-100 img_2" />
-                                </a>
-                                <ul class="wsus__single_pro_icon">
-                                    <li><a href="#" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal-{{ $product->id }}"><i
-                                                class="far fa-eye"></i></a></li>
-                                    <li><a href="#" class="add_to_wishlist" data-id="{{ $product->id }}"><i
-                                                class="far fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="far fa-random"></i></a>
-                                </ul>
-                                <div class="wsus__product_details">
-                                    <a class="wsus__category" href="#">{{ $product->category->name }} </a>
-                                    <p class="wsus__pro_rating">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $product->reviews_avg_rating)
-                                                <i class="fas fa-star"></i>
-                                            @else
-                                                <i class="far fa-star"></i>
-                                            @endif
-                                        @endfor
-
-                                        <span>({{ $product->reviews_count }} review)</span>
-                                    </p>
-
-
-                                    <a class="wsus__pro_name"
-                                        href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
-                                    {{-- <p class="wsus__price">$159 <del>${{ $product->price }}</del></p> --}}
-                                    @if (checkDiscount($product))
-                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
-                                        </p>
-                                    @else
-                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
-                                    @endif
-                                    {{-- لاضافة المنتج الى السلة تم وضع هذا الفورم واخفائه ، عشان لما يجي اليوزر يضيف للسلة يضيف له الفارينتز الديفلت --}}
-                                    <form class="shopping-cart-form">
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        @foreach ($product->variants as $variant)
-                                            <select class="d-none" name="variants_items[]">
-                                                <option>default select</option>
-                                                @foreach ($variant->productVariantItems as $variantItem)
-                                                    <option value="{{ $variantItem->id }}"
-                                                        {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
-                                                        {{ $variantItem->name }}
-                                                        ({{ $settings->currency_icon }}{{ $variantItem->price }})
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        @endforeach
-                                        <input name='qty' type="hidden" min="1" max="100" value="1" />
-                                        <button class="add_cart" type="submit">add to cart</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <x-product-card :product="$product" />
                     @endforeach
                 </div>
                 {{-- <div class="mt-5">
@@ -162,11 +69,11 @@
         </div>
     </section>
     <!--============================
-                                DAILY DEALS DETAILS END
-                            ==============================-->
+                                    DAILY DEALS DETAILS END
+                                ==============================-->
     <!--==========================
-                  PRODUCT MODAL VIEW START
-                ===========================-->
+                      PRODUCT MODAL VIEW START
+                    ===========================-->
     @foreach ($products as $product)
         <section class="product_popup_modal">
             <div class="modal fade" id="exampleModal-{{ $product->id }}" tabindex="-1" aria-hidden="true">
@@ -187,8 +94,8 @@
                                         <div class="row modal_slider">
                                             <div class="col-xl-12">
                                                 <div class="modal_slider_img">
-                                                    <img src="{{ asset($product->thumb_image) }}"
-                                                        alt="{{ $product->name }}" class="img-fluid w-100">
+                                                    <img src="{{ asset($product->thumb_image) }}" alt="{{ $product->name }}"
+                                                        class="img-fluid w-100">
                                                 </div>
                                             </div>
                                             @if (count($product->productImageGalleries) === 0)
@@ -225,16 +132,16 @@
                                             <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
                                         @endif
                                         <p class="wsus__pro_rating">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $product->reviews_avg_rating)
-                                        <i class="fas fa-star"></i>
-                                    @else
-                                        <i class="far fa-star"></i>
-                                    @endif
-                                @endfor
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $product->reviews_avg_rating)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
 
-                                <span>({{ $product->reviews_count }} review)</span>
-                            </p>
+                                            <span>({{ $product->reviews_count }} review)</span>
+                                        </p>
                                         <p class="description">{!! $product->short_description !!}</p>
 
                                         <form class="shopping-cart-form">
@@ -266,8 +173,8 @@
                                             <div class="wsus__quentity">
                                                 <h5>quentity :</h5>
                                                 <div class="select_number">
-                                                    <input name='qty' class="number_area" type="text"
-                                                        min="1" max="100" value="1" />
+                                                    <input name='qty' class="number_area" type="text" min="1"
+                                                        max="100" value="1" />
                                                 </div>
                                             </div>
 
@@ -294,8 +201,8 @@
         </section>
     @endforeach
     <!--==========================
-                  PRODUCT MODAL VIEW END
-                ===========================-->
+                      PRODUCT MODAL VIEW END
+                    ===========================-->
 @endsection
 
 @push('scripts')
