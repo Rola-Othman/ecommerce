@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
+use App\Http\Controllers\Frontend\UserMessageController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserProfileControllrt;
 use App\Http\Controllers\Frontend\UserVendorReqeustController;
@@ -81,6 +82,10 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
   Route::get('/profile', [UserProfileControllrt::class, 'index'])->name('profile');
   Route::post('/profile', [UserProfileControllrt::class, 'updateProfile'])->name('profile.update');
   Route::post('/profile/update/password', [UserProfileControllrt::class, 'updatePassword'])->name('password.update');
+  /** Message Route */
+  Route::get('messages', [UserMessageController::class, 'index'])->name('messages.index');
+  Route::post('send-message', [UserMessageController::class, 'sendMessage'])->name('send-message');
+  Route::get('get-messages', [UserMessageController::class, 'getMessages'])->name('get-messages');
   /** User Address Route */
   Route::resource('address', UserAddressController::class);
   /** Checkout routes */

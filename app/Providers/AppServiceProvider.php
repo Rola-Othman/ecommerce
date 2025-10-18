@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
 use App\Models\LogoSetting;
+use App\Models\PusherSetting;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
@@ -29,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $generalSetting = GeneralSetting::first();
         $logoSetting = LogoSetting::first();
         $mailSetting = EmailConfiguration::first();
+        $pusherSetting = PusherSetting::first();
         /** Set Mail Config */
         Config::set('mail.mailers.smtp.host', $mailSetting->host);
         Config::set('mail.mailers.smtp.port', $mailSetting->port);
@@ -38,9 +40,15 @@ class AppServiceProvider extends ServiceProvider
         //**set time zone in config/app 
         Config::set('app.timezone', $generalSetting->time_zone);
 
+        /** Set Broadcasting Config */
+        Config::set('broadcasting.connections.pusher.key', $pusherSetting->pusher_key);
+        Config::set('broadcasting.connections.pusher.secret', $pusherSetting->pusher_secret);
+        Config::set('broadcasting.connections.pusher.app_id', $pusherSetting->pusher_app_id);
+        Config::set('broadcasting.connections.pusher.options.host', "api-".$pusherSetting->pusher_cluster.".pusher.com");
+
         /** Share variable at all view */
-        View::composer('*', function ($view) use ($generalSetting, $logoSetting) {
-            $view->with(['settings' => $generalSetting, 'logoSetting' => $logoSetting]);
+        View::composer('*', function ($view) use ($generalSetting, $logoSetting, $pusherSetting) {
+            $view->with(['settings' => $generalSetting, 'logoSetting' => $logoSetting, 'pusherSetting' => $pusherSetting]);
         });
     }
 }

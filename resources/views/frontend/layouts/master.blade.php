@@ -34,6 +34,8 @@
     @if ($settings->layout === 'RTL')
         <link rel="stylesheet" href="{{ asset('frotend/css/rtl.css') }}">
     @endif
+    
+    @vite(['resources/js/app.js', 'resources/js/bootstrap.js'])
 </head>
 
 <body>

@@ -3,6 +3,7 @@
 /** Vendor Routes */
 
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorMessageController;
 use App\Http\Controllers\Backend\VendorOrderController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
@@ -26,6 +27,10 @@ Route::group(['middleware' => ['auth', 'role:vendor'], 'prefix' => 'vendor', 'as
   Route::get('/profile', [VendorProfileController::class, 'index'])->name('profile');
   Route::post('/profile', [VendorProfileController::class, 'updateProfile'])->name('profile.update');
   Route::put('/profile', [VendorProfileController::class, 'updatePassword'])->name('password.update');
+  /** Message Route */
+Route::get('messages', [VendorMessageController::class, 'index'])->name('messages.index');
+Route::post('send-message', [VendorMessageController::class, 'sendMessage'])->name('send-message');
+Route::get('get-messages', [VendorMessageController::class, 'getMessages'])->name('get-messages');
   /** Shop profile */
   Route::resource('shop-profile', VendorShopProfileController::class);
   /** Products routes */

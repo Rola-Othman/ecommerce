@@ -38,7 +38,7 @@
                         <h4>forget password ?</h4>
                         <p>enter the email address to register with <span>e-shop</span></p>
                         <div class="wsus__login">
-                            <x-auth-session-status class="mb-4" :status="session('status')" />
+                            {{-- <x-auth-session-status class="mb-4" :status="session('status')" /> --}}
                             <form method="POST" action="{{ route('password.email') }}">
                                 @csrf
                                 <div class="wsus__login_input">
